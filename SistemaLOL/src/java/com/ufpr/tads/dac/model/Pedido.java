@@ -47,7 +47,7 @@ public class Pedido implements Serializable {
     private Date horaPedido;
     @Column(name="pe_cliente")
     private int idCli;
-
+    
     public Pedido() {
     }
 
@@ -72,8 +72,9 @@ public class Pedido implements Serializable {
         return qtd_itens;
     }
 
-    public int getStatus() {
-        return status;
+    public String getStatus() {
+        Status st = Status.fromInt(status);
+        return st.toString();
     }
 
     public void setStatus(int status) {
