@@ -6,6 +6,7 @@
 package com.ufpr.tads.dac.hib.facade;
 
 import com.ufpr.tads.dac.hib.dao.GenericDao;
+import com.ufpr.tads.dac.hib.dao.LoginDao;
 import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.Funcionario;
 import com.ufpr.tads.dac.model.Pedido;
@@ -18,31 +19,36 @@ import java.util.List;
  */
 public class SystemFacade {
  
-    public void inserir (Object obj) {
+    public static void inserir (Object obj) {
         GenericDao.inserir(obj);
     }
     
-    public void alterar (Object obj) {
+    public static void alterar (Object obj) {
         GenericDao.alterar(obj);
     }
     
-    public void excluir (Object obj) {
+    public static void excluir (Object obj) {
         GenericDao.excluir(obj);
     }
     
-    public List<Cliente> getListaClientes() {
+    public static List<Cliente> getListaClientes() {
         return (List<Cliente>) GenericDao.getList(Cliente.class, "nome");
     }
     
-    public List<Funcionario> getListaFuncs() {
+    public static List<Funcionario> getListaFuncs() {
         return (List<Funcionario>) GenericDao.getList(Funcionario.class, "nome");
     }
     
-    public List<Roupa> getListaRoupas() {
+    public static List<Roupa> getListaRoupas() {
         return (List<Roupa>) GenericDao.getList(Roupa.class, "tipo");
     }
     
-    public List<Pedido> getListaPedidos() {
+    public static List<Pedido> getListaPedidos() {
         return (List<Pedido>) GenericDao.getList(Pedido.class);
+    }
+    
+    public static Object autenticar(String usuario, String senha) {
+        LoginDao ld = new LoginDao();
+        return ld.auth(usuario, senha);
     }
 }
