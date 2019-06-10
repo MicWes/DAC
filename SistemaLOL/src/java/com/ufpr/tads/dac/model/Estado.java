@@ -24,20 +24,18 @@ import javax.persistence.Table;
 public class Estado implements Serializable {
     @Id
     @Column(name="es_id")
-    private int idEstado;
+    private int id;
     @Column(name="es_descricao")
     private String descricao;
     @Column(name="es_sigla")
     private String sigla;
-    @OneToMany(mappedBy="estado", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Cidade> cidades;
 
-    public int getIdEstado() {
-        return idEstado;
+    public int getId() {
+        return id;
     }
 
-    public void setIdEstado(int idEstado) {
-        this.idEstado = idEstado;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDescricao() {
@@ -54,14 +52,6 @@ public class Estado implements Serializable {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
-    }
-    
-    public List<Cidade> getCidades() {
-        return cidades;
-    }
-    
-    public void setCidades(List<Cidade> cidades) {
-        this.cidades = cidades;
     }
     
 }

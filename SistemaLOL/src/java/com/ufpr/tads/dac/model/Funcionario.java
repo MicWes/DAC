@@ -9,10 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,12 +21,10 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="tb_funcionario")
-@SequenceGenerator(name="sequencia_func", sequenceName="tb_funcionario_fu_matricula_seq")
 public class Funcionario implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator= "sequencia_func")
     @Column (name="fu_matricula", updatable=false, nullable=false)
-    private int matricula;
+    private String matricula;
     @Column (name="fu_email")
     private String email;
     @Column (name="fu_nome")
@@ -43,11 +38,11 @@ public class Funcionario implements Serializable {
     public Funcionario() {
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 

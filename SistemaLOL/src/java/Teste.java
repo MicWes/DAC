@@ -29,7 +29,7 @@ public class Teste {
         c.setNome("Michelly");
         c.setSenha("123456");
         c.setEndereco("Rua Aquela lá");
-        c.setSexo('F');
+        //c.setSexo('F');
         c.setTelefone("41920175515");
         c.setCidade(1);
         

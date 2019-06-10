@@ -36,13 +36,13 @@ INSERT INTO tb_cliente (cl_nome, cl_email, cl_senha, cl_endereco, cl_cidade, cl_
 VALUES ('Yasmin','yasmin@abc.com','234234','Rua B',1,'F','41984689890','11231231333');
 
 CREATE TABLE tb_funcionario (
-fu_matricula SERIAL PRIMARY KEY,
+fu_matricula varchar(8) NOT NULL,
 fu_nome varchar(50) NOT NULL,
 fu_email varchar(50) UNIQUE NOT NULL,
 fu_senha varchar(50) NOT NULL,
 fu_datanasc timestamp);
-INSERT INTO tb_funcionario (fu_nome, fu_email, fu_senha, fu_datanasc)
-VALUES ('marcos', 'marcos@lol.com', '123', '1996-06-10');
+INSERT INTO tb_funcionario (fu_matricula, fu_nome, fu_email, fu_senha, fu_datanasc)
+VALUES ('10674','marcos', 'marcos@lol.com', '123', '1996-06-10');
 
 CREATE TABLE tb_roupa (
 ro_id SERIAL PRIMARY KEY,

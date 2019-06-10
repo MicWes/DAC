@@ -28,7 +28,7 @@ public class Roupa implements Serializable {
     @Id
     @Column(name="ro_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sequencia_roupa")
-    private int idRoupa;
+    private int id;
     @Column(name="ro_tipo")
     private String tipo;
     @Temporal(TemporalType.TIME)
@@ -40,12 +40,12 @@ public class Roupa implements Serializable {
     public Roupa() {
     }
 
-    public int getIdRoupa() {
-        return idRoupa;
+    public int getId() {
+        return id;
     }
 
-    public void setIdRoupa(int idRoupa) {
-        this.idRoupa = idRoupa;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTipo() {
