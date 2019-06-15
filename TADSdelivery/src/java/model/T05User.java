@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "T05User.findByUserLogin", query = "SELECT t FROM T05User t WHERE t.userLogin = :userLogin")
     , @NamedQuery(name = "T05User.findByUserAdress", query = "SELECT t FROM T05User t WHERE t.userAdress = :userAdress")
     , @NamedQuery(name = "T05User.findByUserPhone", query = "SELECT t FROM T05User t WHERE t.userPhone = :userPhone")
-    , @NamedQuery(name = "T05User.findByUserEmail", query = "SELECT t FROM T05User t WHERE t.userEmail = :userEmail")})
+    , @NamedQuery(name = "T05User.findByUserEmail", query = "SELECT t FROM T05User t WHERE t.userEmail = :userEmail")
+    , @NamedQuery(name = "T05User.findByUserPassword", query = "SELECT t FROM T05User t WHERE t.userPassword = :userPassword")})
 public class T05User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +66,11 @@ public class T05User implements Serializable {
     @Size(max = 30)
     @Column(name = "user_email")
     private String userEmail;
+    @Size(max = 50)
+    @Column(name = "user_password")
+    private String userPassword;
+
+    
     @OneToMany(mappedBy = "deliveryOwner")
     private List<T06Delivery> t06DeliveryList;
     @JoinColumn(name = "user_type", referencedColumnName = "usertype_id")
@@ -142,6 +148,14 @@ public class T05User implements Serializable {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+    
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
     @XmlTransient

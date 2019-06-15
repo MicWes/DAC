@@ -68,3 +68,6 @@ create table T08_message (
 	constraint T08_T05_fk FOREIGN KEY (message_user) REFERENCES T05_user(user_id),
 	constraint T08_T06_fk FOREIGN KEY (message_delivery) REFERENCES T06_delivery(delivery_id)	
  );
+
+alter table t05_user
+add column user_password varchar(50)
