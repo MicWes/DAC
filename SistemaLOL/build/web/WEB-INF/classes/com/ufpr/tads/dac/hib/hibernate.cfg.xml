@@ -52,5 +52,6 @@ Contributor(s):
     <mapping class="com.ufpr.tads.dac.model.Estado"/>
     <mapping class="com.ufpr.tads.dac.model.Roupa"/>
     <mapping class="com.ufpr.tads.dac.model.Cidade"/>
+    <mapping class="com.ufpr.tads.dac.model.ItemPedido"/>
   </session-factory>
 </hibernate-configuration>

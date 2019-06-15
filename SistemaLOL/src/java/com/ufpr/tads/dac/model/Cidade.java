@@ -22,34 +22,33 @@ import javax.persistence.Table;
 public class Cidade implements Serializable {
     @Id
     @Column(name="ci_id")
-    private int idCidade;
+    private int id;
     @Column(name="ci_descricao")
-    private String descricao;
-    @ManyToOne
-    @JoinColumn(name="ci_estado")
-    private Estado estado;
+    private String nome;
+    @Column(name="ci_estado")
+    private int estado;
 
-    public int getIdCidade() {
-        return idCidade;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCidade(int idCidade) {
-        this.idCidade = idCidade;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNome() {
+        return nome;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public Estado getEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }
     

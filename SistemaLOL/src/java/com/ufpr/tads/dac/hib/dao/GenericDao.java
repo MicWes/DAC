@@ -6,11 +6,6 @@
 package com.ufpr.tads.dac.hib.dao;
 
 import com.ufpr.tads.dac.hib.HibernateUtil;
-import com.ufpr.tads.dac.model.Cliente;
-import com.ufpr.tads.dac.model.Funcionario;
-import com.ufpr.tads.dac.model.Pedido;
-import com.ufpr.tads.dac.model.Roupa;
-import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -28,7 +23,7 @@ public class GenericDao {
         int id = 0;
 
         try {
-            Session session = HibernateUtil.getInstance().getSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             try {
                 session.save(item);
@@ -50,7 +45,7 @@ public class GenericDao {
 
     public static void alterar(Object item) {
         try {
-            Session session = HibernateUtil.getInstance().getSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             try {
                 session.merge(item);
@@ -70,7 +65,7 @@ public class GenericDao {
 
     public static void excluir(Object item) {
         try {
-            Session session = HibernateUtil.getInstance().getSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             try {
                 session.refresh(item);
@@ -89,10 +84,24 @@ public class GenericDao {
         }
     }
 
-    public static Object getById(Class c, String attribute, int valor) {
+    public static Object getBy(Class c, String attribute, String value) {
         Object item = null;
         try {
-            Session session = HibernateUtil.getInstance().getSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Criteria cr = session.createCriteria(c);
+            cr.add(Restrictions.eq(attribute, value));
+            cr.setMaxResults(1);
+            item = cr.uniqueResult();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return item;
+    }
+    
+    public static Object getByInt(Class c, String attribute, int valor) {
+        Object item = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Criteria cr = session.createCriteria(c);
             cr.add(Restrictions.eq(attribute, valor));
             cr.setMaxResults(1);
@@ -103,11 +112,15 @@ public class GenericDao {
         return item;
     }
 
-    public static List getList(Class c, String attributeOrder) {
-        List lista = new ArrayList();
+    public static List getListBy(Class c, String attribute, String param,
+            String attributeOrder) {
+        List lista = null;
         try {
-            Session session = HibernateUtil.getInstance().getSession();
+            Session session = HibernateUtil.getSessionFactory().openSession();
             Criteria cr = session.createCriteria(c);
+            if (param != null && attribute != null) {
+                cr.add(Restrictions.eq(attribute, param));
+            }
             if (attributeOrder != null) {
                 cr.addOrder(Order.asc(attributeOrder));
             }
@@ -116,6 +129,26 @@ public class GenericDao {
             ex.printStackTrace();
         }
         return lista;
+    }
+    
+    public static List getListByInt(Class c, int id, String attribute, String attributeOrder) {
+        List lista = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Criteria cr = session.createCriteria(c);
+            cr.add(Restrictions.eq(attribute, id));
+            if (attributeOrder != null) {
+                cr.addOrder(Order.desc(attributeOrder));
+            }
+            lista = cr.list();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+
+    public static List getList(Class c, String attributeOrder) {
+        return getListBy(c, null, null, attributeOrder);
     }
 
     public static List getList(Class c) {

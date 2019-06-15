@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/base_cliente.xhtml">
+
+    <h:head>
+        <title>Lol - Pedido nº #{id}</title>
+    </h:head>
+    <ui:define name="general_content">
+
+        <h:outputLabel class="title"> Dados do Pedido nº #{id}</h:outputLabel>  
+        
+        <p:panelGrid columns="2">
+            <p:outputLabel value="Hora de realização do pedido:"/>
+            <p:outputLabel value="#{verPedido.pedido.horaPedido}"/>
+            <p:outputLabel value="Prazo para a lavagem dos itens:"/>
+            <p:outputLabel value="#{verPedido.pedido.prazo}"/>
+            <p:outputLabel value="Quantidade total de itens:"/>
+            <p:outputLabel value="#{verPedido.pedido.qtdItens}"/>
+            <p:outputLabel value="Status atual do pedido:"/>
+            <p:outputLabel value="#{verPedido.pedido.status}"/>
+        </p:panelGrid>
+        
+        <h:outputLabel class="subtitle">Itens do Pedido</h:outputLabel>
+        
+        <p:dataTable var="roupa" value="#{verPedido.keys}">
+            <p:column headerText="Roupa">
+                <h:outputText value="#{roupa.tipo}" />
+            </p:column>
+
+            <p:column headerText="Quantidade">
+                <h:outputText value="#{verPedido.map[roupa]}" />
+            </p:column>
+            
+            <p:column headerText="Preço">
+                <h:outputText value="#{roupa.valor}" />
+            </p:column>
+            
+        </p:dataTable>
+        <p:outputLabel value="Total: #{verPedido.pedido.total}" />
+        
+    </ui:define>
+
+</ui:composition>

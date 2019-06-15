@@ -8,6 +8,7 @@ package com.ufpr.tads.dac.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class Pedido implements Serializable {
     @Id
     @Column(name="pe_numpedido")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sequencia_pedido")
-    private int numPedido;
+    private int id;
     @Transient 
     private Map<Roupa, Integer> itens = new HashMap();
     @Column(name="pe_qtd_itens")
@@ -47,16 +48,18 @@ public class Pedido implements Serializable {
     private Date horaPedido;
     @Column(name="pe_cliente")
     private int idCli;
+    @Column(name="pe_preco")
+    private double total;
     
     public Pedido() {
     }
 
-    public int getNumPedido() {
-        return numPedido;
+    public int getId() {
+        return id;
     }
 
-    public void setNumPedido(int numPedido) {
-        this.numPedido = numPedido;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Map<Roupa, Integer> getItens() {
@@ -65,7 +68,7 @@ public class Pedido implements Serializable {
 
     public void setItens(Map<Roupa, Integer> itens) {
         this.itens = itens;
-        this.qtd_itens = itens.size();
+        this.qtd_itens = itens.values().stream().reduce(0, Integer::sum);
     }
     
     public int getQtdItens() {
@@ -104,5 +107,13 @@ public class Pedido implements Serializable {
     public void setIdCli(int idCli) {
         this.idCli = idCli;
     }
-        
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+       
 }

@@ -26,7 +26,7 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sequencia_cliente")
     @Column(name="cl_id", updatable = false, nullable = false)
-    private int idCli;
+    private int id;
     @Column(name="cl_nome")
     private String nome;
     @Column(name="cl_cpf", unique=true)
@@ -40,19 +40,19 @@ public class Cliente implements Serializable {
     @Column(name="cl_endereco")
     private String endereco;
     @Column(name="cl_sexo")
-    private char sexo; 
+    private String sexo; 
     @Column (name="cl_telefone")
     private String telefone;
 
     public Cliente() {
     }
 
-    public int getIdCli() {
-        return idCli;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCli(int idCli) {
-        this.idCli = idCli;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -96,10 +96,10 @@ public class Cliente implements Serializable {
     }
 
     public String getSexo() {
-        return String.valueOf(sexo);
+        return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
