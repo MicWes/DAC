@@ -61,4 +61,8 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
     
+    //public static Object autenticar(String usuario, String senha) {
+        //LoginDao ld = new LoginDao();
+        //return ld.auth(usuario, senha);
+    //}
 }

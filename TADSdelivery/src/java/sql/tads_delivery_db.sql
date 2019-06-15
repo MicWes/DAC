@@ -1,6 +1,6 @@
 ﻿create table T01_delivery_status (
 	status_id serial primary key,
-	name_id varchar(20)
+	name_id varchar(20) --status_name
 );
 
 create table T02_user_type (
