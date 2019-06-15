@@ -22,6 +22,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import util.Encriptador;
+import util.HibernateUtil;
 
 /**
  *
@@ -39,7 +43,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "T05User.findByUserAdress", query = "SELECT t FROM T05User t WHERE t.userAdress = :userAdress")
     , @NamedQuery(name = "T05User.findByUserPhone", query = "SELECT t FROM T05User t WHERE t.userPhone = :userPhone")
     , @NamedQuery(name = "T05User.findByUserEmail", query = "SELECT t FROM T05User t WHERE t.userEmail = :userEmail")
-    , @NamedQuery(name = "T05User.findByUserPassword", query = "SELECT t FROM T05User t WHERE t.userPassword = :userPassword")})
+    , @NamedQuery(name = "T05User.findByUserPassword", query = "SELECT t FROM T05User t WHERE t.userPassword = :userPassword")
+    , @NamedQuery(name = "T05User.findByUserLoginPassword", query = "SELECT t FROM T05User t WHERE t.userLogin = :userLogin and t.userPassword = :userPassword")})
 public class T05User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,7 +75,6 @@ public class T05User implements Serializable {
     @Column(name = "user_password")
     private String userPassword;
 
-    
     @OneToMany(mappedBy = "deliveryOwner")
     private List<T06Delivery> t06DeliveryList;
     @JoinColumn(name = "user_type", referencedColumnName = "usertype_id")
@@ -149,7 +153,7 @@ public class T05User implements Serializable {
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
-    
+
     public String getUserPassword() {
         return userPassword;
     }
@@ -209,6 +213,18 @@ public class T05User implements Serializable {
         this.t08MessageList = t08MessageList;
     }
 
+    public Object auth(String login, String password) {
+        password = Encriptador.toMD5(password);
+        Object user = valida_login(login, password);
+        return user;
+    }
+
+    private Object valida_login(String login, String password) {
+        //criteria busca ?
+
+        return null;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -233,5 +249,5 @@ public class T05User implements Serializable {
     public String toString() {
         return "model.T05User[ userId=" + userId + " ]";
     }
-    
+
 }

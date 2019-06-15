@@ -7,6 +7,7 @@ package facade;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import model.T05User;
 
 /**
  *
@@ -61,8 +62,8 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
     
-    //public static Object autenticar(String usuario, String senha) {
-        //LoginDao ld = new LoginDao();
-        //return ld.auth(usuario, senha);
-    //}
+    public static Object autenticar(String login, String password) {
+        T05User user = new T05User();
+        return user.auth(login, password);
+    }
 }

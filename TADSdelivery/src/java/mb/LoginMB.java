@@ -64,8 +64,12 @@ public class LoginMB implements Serializable{
     }
     
     public String autenticar() {
-        //Object obj = AbstractFacade.autenticar(login, password);
-
+        Object obj = AbstractFacade.autenticar(login, password);
+        if (obj instanceof T05User) {
+            return "faces/t06Delivery";
+        } else if (obj instanceof T05User) {
+            return "faces/t07Action";
+        }
         return "index";
     }
     
