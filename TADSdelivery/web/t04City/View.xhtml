@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T04CityViewDlg" widgetVar="T04CityViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewT04CityTitle}">
+            <h:form id="T04CityViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t04CityController.selected != null}">
+                        <h:outputText value="#{bundle.ViewT04CityLabel_cityId}"/>
+                        <h:outputText value="#{t04CityController.selected.cityId}" title="#{bundle.ViewT04CityTitle_cityId}"/>
+                        <h:outputText value="#{bundle.ViewT04CityLabel_cityName}"/>
+                        <h:outputText value="#{t04CityController.selected.cityName}" title="#{bundle.ViewT04CityTitle_cityName}"/>
+                        <h:outputText value="#{bundle.ViewT04CityLabel_cityUf}"/>
+                        <h:outputText value="#{t04CityController.selected.cityUf}" title="#{bundle.ViewT04CityTitle_cityUf}"/>
+                        <h:outputText value="#{bundle.ViewT04CityLabel_cityState}"/>
+                        <h:outputText value="#{t04CityController.selected.cityState}" title="#{bundle.ViewT04CityTitle_cityState}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="T04CityViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

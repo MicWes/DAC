@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T06DeliveryEditDlg" widgetVar="T06DeliveryEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditT06DeliveryTitle}">
+            <h:form id="T06DeliveryEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t06DeliveryController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryId}" for="deliveryId" />
+                        <p:inputText id="deliveryId" value="#{t06DeliveryController.selected.deliveryId}" title="#{bundle.EditT06DeliveryTitle_deliveryId}" required="true" requiredMessage="#{bundle.EditT06DeliveryRequiredMessage_deliveryId}"/>
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryDescription}" for="deliveryDescription" />
+                        <p:inputText id="deliveryDescription" value="#{t06DeliveryController.selected.deliveryDescription}" title="#{bundle.EditT06DeliveryTitle_deliveryDescription}" />
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryLocal}" for="deliveryLocal" />
+                        <p:inputText id="deliveryLocal" value="#{t06DeliveryController.selected.deliveryLocal}" title="#{bundle.EditT06DeliveryTitle_deliveryLocal}" />
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryDestiny}" for="deliveryDestiny" />
+                        <p:inputText id="deliveryDestiny" value="#{t06DeliveryController.selected.deliveryDestiny}" title="#{bundle.EditT06DeliveryTitle_deliveryDestiny}" />
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryDtcad}" for="deliveryDtcad" />
+                        <p:calendar id="deliveryDtcad" pattern="MM/dd/yyyy HH:mm:ss" value="#{t06DeliveryController.selected.deliveryDtcad}" title="#{bundle.EditT06DeliveryTitle_deliveryDtcad}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryStatus}" for="deliveryStatus" />
+                        <p:selectOneMenu id="deliveryStatus" value="#{t06DeliveryController.selected.deliveryStatus}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{t01DeliveryStatusController.itemsAvailableSelectOne}"
+                                           var="deliveryStatusItem"
+                                           itemValue="#{deliveryStatusItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryOwner}" for="deliveryOwner" />
+                        <p:selectOneMenu id="deliveryOwner" value="#{t06DeliveryController.selected.deliveryOwner}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{t05UserController.itemsAvailableSelectOne}"
+                                           var="deliveryOwnerItem"
+                                           itemValue="#{deliveryOwnerItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{t06DeliveryController.update}" value="#{bundle.Save}" update="display,:T06DeliveryListForm:datalist,:growl" oncomplete="handleSubmit(args, 'T06DeliveryEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="T06DeliveryEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

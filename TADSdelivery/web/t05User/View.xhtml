@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T05UserViewDlg" widgetVar="T05UserViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewT05UserTitle}">
+            <h:form id="T05UserViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t05UserController.selected != null}">
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userId}"/>
+                        <h:outputText value="#{t05UserController.selected.userId}" title="#{bundle.ViewT05UserTitle_userId}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userName}"/>
+                        <h:outputText value="#{t05UserController.selected.userName}" title="#{bundle.ViewT05UserTitle_userName}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userCpf}"/>
+                        <h:outputText value="#{t05UserController.selected.userCpf}" title="#{bundle.ViewT05UserTitle_userCpf}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userLogin}"/>
+                        <h:outputText value="#{t05UserController.selected.userLogin}" title="#{bundle.ViewT05UserTitle_userLogin}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userAdress}"/>
+                        <h:outputText value="#{t05UserController.selected.userAdress}" title="#{bundle.ViewT05UserTitle_userAdress}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userPhone}"/>
+                        <h:outputText value="#{t05UserController.selected.userPhone}" title="#{bundle.ViewT05UserTitle_userPhone}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userEmail}"/>
+                        <h:outputText value="#{t05UserController.selected.userEmail}" title="#{bundle.ViewT05UserTitle_userEmail}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userPassword}"/>
+                        <h:outputText value="#{t05UserController.selected.userPassword}" title="#{bundle.ViewT05UserTitle_userPassword}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userType}"/>
+                        <h:outputText value="#{t05UserController.selected.userType}" title="#{bundle.ViewT05UserTitle_userType}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userState}"/>
+                        <h:outputText value="#{t05UserController.selected.userState}" title="#{bundle.ViewT05UserTitle_userState}"/>
+                        <h:outputText value="#{bundle.ViewT05UserLabel_userCity}"/>
+                        <h:outputText value="#{t05UserController.selected.userCity}" title="#{bundle.ViewT05UserTitle_userCity}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="T05UserViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
