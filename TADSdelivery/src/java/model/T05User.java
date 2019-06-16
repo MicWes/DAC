@@ -7,6 +7,7 @@ package model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,8 +23,10 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import util.Encriptador;
 import util.HibernateUtil;
 
@@ -220,9 +223,13 @@ public class T05User implements Serializable {
     }
 
     private Object valida_login(String login, String password) {
-        //criteria busca ?
+        //criteria busca
 
-        return null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria crit = session.createCriteria(T05User.class);
+        crit.add(Restrictions.eq("user_login", login));
+        crit.add(Restrictions.eq("user_password", password));
+        return crit.uniqueResult();
     }
 
     @Override

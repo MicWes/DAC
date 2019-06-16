@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>TADS Delivery</title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
@@ -24,10 +25,11 @@
                                requiredMessage="Informe a senha!"/>
                 <p:message for="senha" styleClass="red" />
                 
-                <p:commandButton value="Login" action="#{login.autenticar()}"  />
+                <p:commandButton value="Entrar" action="#{login.autenticar()}"  />
+                <p:commandButton id="createButton" icon="ui-icon-plus"   value="Cadastre-se" actionListener="#{t05UserController.prepareCreate}" oncomplete="PF('Cadastro').show()"/>
             </h:panelGrid>
         </h:form>
-        <h:outputLink value="faces/cadastro.xhtml">Cadastre-se!</h:outputLink>
+        
         <hr />
         <br /><br />
         <h3>All Tables CRUD:</h3>
@@ -50,7 +52,7 @@
 
 
 
-
+<ui:include src="cadastro.xhtml"/>
 
 
 
