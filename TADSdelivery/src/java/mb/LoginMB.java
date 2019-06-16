@@ -5,6 +5,7 @@
  */
 package mb;
 
+import controller.T05UserController;
 import facade.AbstractFacade;
 import java.io.Serializable;
 import javax.inject.Named;
@@ -66,9 +67,11 @@ public class LoginMB implements Serializable{
     public String autenticar() {
         Object obj = AbstractFacade.autenticar(login, password);
         if (obj instanceof T05User) {
-            return "faces/t06Delivery";
+            gerente = (T05User)obj;
+            return "faces/t06Delivery/List.xhtml";
         } else if (obj instanceof T05User) {
-            return "faces/t07Action";
+            entregador = (T05User)obj;
+            return "faces/t07Action/List.xhtml";
         }
         return "index";
     }

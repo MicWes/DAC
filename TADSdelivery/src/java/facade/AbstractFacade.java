@@ -5,9 +5,11 @@
  */
 package facade;
 
+import dao.LoginDao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import model.T05User;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -45,13 +47,6 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).getResultList();
     }
     
-    /*
-    public T findLogin() {
-        javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return getEntityManager().createQuery(cq).;
-    }*/
-
     public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
@@ -70,7 +65,7 @@ public abstract class AbstractFacade<T> {
     }
     
     public static Object autenticar(String login, String password) {
-        T05User user = new T05User();
-        return user.auth(login, password);
+        LoginDao ld = new LoginDao();
+        return ld.auth(login, password);
     }
 }
