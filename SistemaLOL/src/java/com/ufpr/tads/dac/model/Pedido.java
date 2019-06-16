@@ -25,32 +25,34 @@ import javax.persistence.Transient;
  *
  * @author Marcos
  */
-
 @Entity
-@Table(name="tb_pedido")
-@SequenceGenerator(name="sequencia_pedido", sequenceName="tb_cliente_pe_numpedido_seq")
+@Table(name = "tb_pedido")
+@SequenceGenerator(name = "sequencia_pedido", sequenceName = "tb_pedido_pe_numpedido_seq")
 public class Pedido implements Serializable {
+
     @Id
-    @Column(name="pe_numpedido")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sequencia_pedido")
+    @Column(name = "pe_numpedido")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequencia_pedido")
     private int id;
-    @Transient 
+    @Transient
     private Map<Roupa, Integer> itens = new HashMap();
-    @Column(name="pe_qtd_itens")
+    @Transient
+    private List<ItemPedido> itensPedido;
+    @Column(name = "pe_qtd_itens")
     private int qtd_itens;
-    @Column(name="pe_status")
+    @Column(name = "pe_status")
     private int status;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="pe_prazo")
+    @Column(name = "pe_prazo")
     private Date prazo;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="pe_datapedido")
+    @Column(name = "pe_datapedido")
     private Date horaPedido;
-    @Column(name="pe_cliente")
+    @Column(name = "pe_cliente")
     private int idCli;
-    @Column(name="pe_preco")
+    @Column(name = "pe_preco")
     private double total;
-    
+
     public Pedido() {
     }
 
@@ -70,9 +72,21 @@ public class Pedido implements Serializable {
         this.itens = itens;
         this.qtd_itens = itens.values().stream().reduce(0, Integer::sum);
     }
-    
+
+    public List<ItemPedido> getItensPedido() {
+        return itensPedido;
+    }
+
+    public void setItensPedido(List<ItemPedido> itensPedido) {
+        this.itensPedido = itensPedido;
+    }
+
     public int getQtdItens() {
         return qtd_itens;
+    }
+
+    public void setQtdItens(int qtd) {
+        this.qtd_itens = qtd;
     }
 
     public String getStatus() {
@@ -115,5 +129,5 @@ public class Pedido implements Serializable {
     public void setTotal(double total) {
         this.total = total;
     }
-       
+
 }

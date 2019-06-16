@@ -77,6 +77,7 @@ public class ItemPedido implements Serializable {
 
     public void setRoupa(Roupa roupa) {
         this.roupa = roupa;
+        this.idRoupa = roupa.getId();
     }
     
 }

@@ -21,23 +21,36 @@ public class PedidoFacade {
 
     public static Pedido getPedido(int pedido) {
         Pedido p = (Pedido) GenericDao.getByInt(Pedido.class, "id", pedido);
-        List<ItemPedido> itens = (List<ItemPedido>) 
-                GenericDao.getListByInt(ItemPedido.class, pedido, "idPedido", null);
+        List<ItemPedido> itens = (List<ItemPedido>) GenericDao.getListByInt(ItemPedido.class, pedido, "idPedido", null);
         List<Roupa> roupas = (List<Roupa>) GenericDao.getList(Roupa.class, "id"); //ordena pelo id pra poder pegar pelo indice no for
         Map<Roupa, Integer> map = new HashMap<>();
         for (ItemPedido item : itens) {
-            map.put(roupas.get(item.getIdRoupa()-1), item.getQtd());
+            map.put(item.getRoupa(), item.getQtd());
         }
         p.setItens(map);
         return p;
     }
 
     public static List<Pedido> getListaPedidos() {
-        return (List<Pedido>) GenericDao.getList(Pedido.class);
+        return (List<Pedido>) GenericDao.getList(Pedido.class, "horaPedido");
     }
 
     public static List<Pedido> getPedidosCliente(int id) {
         return (List<Pedido>) GenericDao.getListByInt(Pedido.class, id, "idCli", "horaPedido");
+    }
+
+    public static boolean inserirPedido(Pedido pedido) {
+        int idPedido = GenericDao.inserir(pedido);
+        if (idPedido > 0) {
+            for (ItemPedido ip : pedido.getItensPedido()) {
+                ip.setIdPedido(idPedido);
+            }
+            int ok = GenericDao.inserir(pedido.getItensPedido());
+            if (ok > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

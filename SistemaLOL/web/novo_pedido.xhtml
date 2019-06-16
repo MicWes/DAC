@@ -13,80 +13,74 @@
     <ui:define name="general_content">
 
         <h:form id="form1">
-            <p:growl id="messages" showDetail="true"/>
-            <p:panel header="Sale Item" style="width: 400px;"> 
+            <p:panel header="Fazer Pedido"> 
                 <p:panelGrid columns="2">
                     <h:outputLabel for="ra" value="Roupa: " />
                     <h:selectOneMenu id="ra"
                                      value="#{novoPedido.idRoupa}"
                                      required="true">
-                        <f:selectItems value="#{novoPedido.roupas}" 
-                                       var="r" 
-                                       itemLabel="#{r.tipo}" 
-                                       itemValue="#{r.id}" />
+                        <f:selectItem itemLabel="-- selecione --" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{novoPedido.roupas}" var="r" 
+                                       itemLabel="#{r.tipo}" itemValue="#{r.id}" />
                     </h:selectOneMenu>
                     <h:outputLabel for="qtd" value="Quantidade: " />
-                    <p:spinner value="#{novoPedido.qtd}"/>
+                    <p:spinner value="#{novoPedido.qtd}" min="1"/>
                     <f:facet name="footer">
-                        <h:commandButton value="Adicionar" action="#{novoPedido.adicionar()}"/>
+                        <h:commandButton value="Adicionar" action="#{novoPedido.adicionar()}" />
                     </f:facet>
                 </p:panelGrid>
                 <p:spacer height="30px;"/>
-                <p:dataTable value="#{novoPedido.itens}" 
-                             var="i"  
-                             widgetVar="50" 
-                             style="width: 60px;" 
-                             editable="true"
-                             rendered="#{novoPedido.itens.size() ne 0}">
+
+                <p:dataTable 
+                    id="dt"
+                    value="#{novoPedido.itens}" 
+                    var="i"
+                    editable="true"
+                    widgetVar="50" 
+                    rendered="#{novoPedido.itens.size() ne 0}">
                     <f:facet name="header">  
                         Itens do Pedido
                     </f:facet>
-                    <p:ajax event="rowEdit" listener="#{novoPedido.onEdit}" update=":form1:messages" />  
-                    <p:ajax event="rowEditCancel" listener="#{novoPedido.onCancel}" update=":form1:messages" /> 
                     <p:column>
                         <f:facet name="header">  
                             <h:outputText value="Roupa" />  
                         </f:facet>
-                        <p:cellEditor>  
-                            <f:facet name="output">  
-                                <h:outputText value="#{i.roupa.tipo}" />  
-                            </f:facet>  
-                            <f:facet name="input">  
-                                <p:inputText value="#{i.roupa.tipo}" style="width:100%"/>  
-                            </f:facet>  
-                        </p:cellEditor> 
+                        <h:outputText value="#{i.roupa.tipo}" />  
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">  
                             <h:outputText value="Quantidade" />  
                         </f:facet>
-                        <p:cellEditor>  
-                            <f:facet name="output">  
-                                <h:outputText value="#{i.qtd}" />  
-                            </f:facet>  
-                            <f:facet name="input">  
-                                <p:inputText value="#{i.qtd}" style="width:100%"/>  
-                            </f:facet>  
-                        </p:cellEditor>
+                        <h:outputText value="#{i.qtd}"/>  
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">  
                             <h:outputText value="Subtotal" />  
                         </f:facet>
-                        <p:cellEditor>  
-                            <f:facet name="output">  
-                                <h:outputText value="#{i.qtd * i.roupa.valor}" />  
-                            </f:facet>  
-                            <f:facet name="input">  
-                                <p:inputText value="#{i.qtd * i.roupa.valor}" style="width:100%"/>  
-                            </f:facet>  
-                        </p:cellEditor>
+                        <h:outputText value="#{i.qtd * i.roupa.valor}">
+                            <f:convertNumber currencyCode="BRL" type="currency" />
+                        </h:outputText>
                     </p:column>               
-                    <p:column headerText="Options" style="width:50px">  
-                        <p:rowEditor />  
-                    </p:column> 
+                    <p:column headerText="Options">  
+                        <h:commandButton action="#{novoPedido.delete(i)}" value="X"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <h:outputText value="Prazo de entrega: "/>
+                        <h:outputText value="#{novoPedido.prazo}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                        <p:spacer width="40px"/> |
+                        <p:spacer width="40px"/>
+                        <h:outputText value="Total: "/>
+                        <h:outputText value="#{novoPedido.total}" >
+                            <f:convertNumber currencyCode="BRL" type="currency" />
+                        </h:outputText>
+                        <p:spacer width="40px"/> |
+                        <p:spacer width="40px"/>
+                        <p:commandButton value="Fazer Pedido" action="#{novoPedido.fazerPedido()}"/>
+                    </f:facet>
                 </p:dataTable>
             </p:panel>
         </h:form>

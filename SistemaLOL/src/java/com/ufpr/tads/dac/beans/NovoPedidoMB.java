@@ -5,19 +5,27 @@
  */
 package com.ufpr.tads.dac.beans;
 
+import com.ufpr.tads.dac.hib.facade.PedidoFacade;
 import com.ufpr.tads.dac.hib.facade.SystemFacade;
+import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.ItemPedido;
+import com.ufpr.tads.dac.model.Pedido;
 import com.ufpr.tads.dac.model.Roupa;
+import com.ufpr.tads.dac.model.Status;
+import com.ufpr.tads.dac.utils.Utils;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -27,12 +35,35 @@ import org.primefaces.event.RowEditEvent;
 @ViewScoped
 public class NovoPedidoMB implements Serializable {
 
+    @ManagedProperty(value = "#{login.cliente}")
+    private Cliente cli;
     private List<ItemPedido> itens;
-    private Date prazo;
     private double total;
-    private List<Roupa> roupas;
+    private Map<String, String> roupas;
+    private Map<String, Roupa> roupaSelect;
     private int qtd;
     private String idRoupa;
+    private Date prazo;
+
+    @PostConstruct
+    public void init() {
+        itens = new ArrayList<>();
+        roupas = new HashMap<>();
+        roupaSelect = new HashMap<>();
+        List<Roupa> rps = SystemFacade.getListaRoupas();
+        for (Roupa r : rps) {
+            roupas.put(r.getTipo(), r.getTipo());
+            roupaSelect.put(r.getTipo(), r);
+        }
+    }
+
+    public Cliente getCli() {
+        return cli;
+    }
+
+    public void setCli(Cliente cli) {
+        this.cli = cli;
+    }
 
     public List<ItemPedido> getItens() {
         return itens;
@@ -43,27 +74,52 @@ public class NovoPedidoMB implements Serializable {
     }
 
     public Date getPrazo() {
-        return prazo;
-    }
-
-    public void setPrazo(Date prazo) {
-        this.prazo = prazo;
+        if (Utils.isAberto()) {
+            int newHours = 0;
+            int newMin = 0;
+            int newSec = 0;
+            for (ItemPedido ip : itens) {
+                for (int i = 0; i < ip.getQtd(); i++) {
+                    newHours += ip.getRoupa().getPrazoLT().getHour();
+                    newMin += ip.getRoupa().getPrazoLT().getMinute();
+                    newSec += ip.getRoupa().getPrazoLT().getSecond();
+                }
+            }
+            LocalDateTime newPrazo = Utils.addTimeToLDT(newHours, newMin, newSec);
+            return Date.from(newPrazo.atZone(ZoneId.systemDefault()).toInstant());
+        } else {
+            return Utils.horaAbertura();
+        }
     }
 
     public double getTotal() {
-        return total;
+        double n = 0;
+        qtd = 0;
+        for (ItemPedido ip : itens) {
+            n += (ip.getQtd() * ip.getRoupa().getValor());
+            qtd += ip.getQtd();
+        }
+        return n;
     }
 
     public void setTotal(double total) {
         this.total = total;
     }
 
-    public List<Roupa> getRoupas() {
+    public Map<String, String> getRoupas() {
         return roupas;
     }
 
-    public void setRoupas(List<Roupa> roupas) {
+    public void setRoupas(Map<String, String> roupas) {
         this.roupas = roupas;
+    }
+
+    public Map<String, Roupa> getRoupaSelect() {
+        return roupaSelect;
+    }
+
+    public void setRoupaSelect(Map<String, Roupa> roupaSelect) {
+        this.roupaSelect = roupaSelect;
     }
 
     public int getQtd() {
@@ -82,31 +138,45 @@ public class NovoPedidoMB implements Serializable {
         this.idRoupa = idRoupa;
     }
 
-    @PostConstruct
-    public void init() {
-        itens = new ArrayList<>();
-        roupas = SystemFacade.getListaRoupas();
-    }
-
-    public void onEdit(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Alterado");//, ((ItemPedido) event.getObject()).getRoupa().getTipo());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
-
-    public void onCancel(RowEditEvent event) {
-        FacesMessage msg = new FacesMessage("Removido");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        itens.remove((ItemPedido) event.getObject());
+    public void delete(ItemPedido i) {
+        itens.remove(i);
+        Utils.message("Item Removido");
     }
 
     public void adicionar() {
-        // Add one new car to the table:
         ItemPedido i = new ItemPedido();
-        i.setRoupa(roupas.get(Integer.parseInt(idRoupa)-1));
+        i.setRoupa(roupaSelect.get(idRoupa));
         i.setQtd(qtd);
-        itens.add(i);
-        FacesMessage msg = new FacesMessage("Roupa adicionada", i.getRoupa().getTipo());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        boolean exists = false;
+        String result = "Item adicionado";
+        for (ItemPedido ip : itens) {
+            if (ip.getIdRoupa() == i.getIdRoupa()) {
+                ip.setQtd(qtd + ip.getQtd());
+                exists = true;
+                result = "Quantidade adicionada a item de mesmo tipo existente";
+            }
+        }
+        if (!exists) {
+            itens.add(i);
+        }
+        Utils.message(result, i.getRoupa().getTipo());
     }
 
+    public String fazerPedido() {
+        Pedido p = new Pedido();
+        p.setIdCli(cli.getId());
+        p.setPrazo(getPrazo());
+        p.setStatus(Status.AGD_LAV.getNum());
+        p.setTotal(getTotal());
+        p.setQtdItens(qtd);
+        p.setHoraPedido(Date.from(Instant.now()));
+        p.setItensPedido(itens);
+        if (PedidoFacade.inserirPedido(p)) {
+            Utils.message("Pedido Realizado com Sucesso!");
+            return "pedidos";
+        } else {
+            Utils.message("Erro ao salvar seu pedido");
+        }
+        return "";
+    }
 }

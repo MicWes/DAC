@@ -68,6 +68,7 @@ INSERT INTO tb_pedido (pe_qtd_itens, pe_prazo, pe_datapedido, pe_preco, pe_statu
 VALUES (3,'2019-05-29 09:00:00','2019-05-28 17:00:44',15,1,2);
 
 CREATE TABLE tb_pedido_roupa (
+pr_id SERIAL PRIMARY KEY,
 pr_roupa int,
 pr_pedido int,
 pr_qtd int,

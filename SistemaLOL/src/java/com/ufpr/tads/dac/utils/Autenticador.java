@@ -27,13 +27,16 @@ public class Autenticador implements PhaseListener {
         if ("/cadastro.xhtml".equals(context.getViewRoot().getViewId())) {
             return;
         }
-        if ("/pedidos_cli.xhtml".equals(context.getViewRoot().getViewId())) {
+        if ("/pedidos.xhtml".equals(context.getViewRoot().getViewId())) {
             return;
         }
         if ("/visualizar_pedidos.xhtml".equals(context.getViewRoot().getViewId())) {
             return;
         }
         if ("/novo_pedido.xhtml".equals(context.getViewRoot().getViewId())) {
+            return;
+        }
+        if("/roupas.xhtml".equals(context.getViewRoot().getViewId())){
             return;
         }
 

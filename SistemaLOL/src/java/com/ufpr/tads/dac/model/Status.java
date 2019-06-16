@@ -13,18 +13,18 @@ import java.io.Serializable;
  */
 public enum Status implements Serializable {
 
-    PROBLE(0),
-    AGD_LAV(1),
-    AGD_PAG(2),
-    AGD_ENT(3),
-    ENT_SOL(4),
+    AGD_LAV(0),
+    AGD_PAG(1),
+    AGD_ENT(2),
+    ENT_SOL(3),
+    CONCLU(4),
     CANCEL(5),
-    CONCLU(6);
+    PROBLE(6);
 
     private final int num;
     private static final String[] STATUS = {
-        "Houve um Problema", "Aguardando Lavagem", "Aguardando Pagamento",
-        "Aguardando Entrega", "Solicitada Entrega", "Cancelado", "Concluído",};
+        "Aguardando Lavagem", "Aguardando Pagamento", "Aguardando Entrega",
+        "Entrega Solicitada", "Concluído", "Cancelado", "Houve um Problema",};
 
     Status(int num) {
         this.num = num;
@@ -37,19 +37,19 @@ public enum Status implements Serializable {
     public static Status fromInt(int num) {
         switch (num) {
             case 1:
-                return AGD_LAV;
-            case 2:
                 return AGD_PAG;
-            case 3:
+            case 2:
                 return AGD_ENT;
-            case 4:
+            case 3:
                 return ENT_SOL;
+            case 4:
+                return CONCLU;
             case 5:
                 return CANCEL;
             case 6:
-                return CONCLU;
-            default:
                 return PROBLE;
+            default:
+                return AGD_LAV;
         }
     }
 
@@ -64,5 +64,5 @@ public enum Status implements Serializable {
         }
         return "";
     }
-    
+
 }

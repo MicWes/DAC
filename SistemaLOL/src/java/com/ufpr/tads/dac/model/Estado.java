@@ -29,6 +29,8 @@ public class Estado implements Serializable {
     private String descricao;
     @Column(name="es_sigla")
     private String sigla;
+    @OneToMany(mappedBy="estado", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    private List<Cidade> cidades;
 
     public int getId() {
         return id;
@@ -52,6 +54,14 @@ public class Estado implements Serializable {
 
     public void setSigla(String sigla) {
         this.sigla = sigla;
+    }
+    
+    public List<Cidade> getCidades() {
+        return cidades;
+    }
+    
+    public void setCidades(List<Cidade> cidades) {
+        this.cidades = cidades;
     }
     
 }

@@ -6,6 +6,7 @@
 package com.ufpr.tads.dac.hib.dao;
 
 import com.ufpr.tads.dac.hib.HibernateUtil;
+import com.ufpr.tads.dac.model.Funcionario;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -21,13 +22,11 @@ public class GenericDao {
 
     public static int inserir(Object item) {
         int id = 0;
-
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             try {
-                session.save(item);
-
+                id = (int) session.save(item);
                 tx.commit();
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -40,7 +39,11 @@ public class GenericDao {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        return id;
+        if (item instanceof Funcionario) {
+            return 333;
+        } else {
+            return id;
+        }
     }
 
     public static void alterar(Object item) {
@@ -97,7 +100,7 @@ public class GenericDao {
         }
         return item;
     }
-    
+
     public static Object getByInt(Class c, String attribute, int valor) {
         Object item = null;
         try {
@@ -130,7 +133,7 @@ public class GenericDao {
         }
         return lista;
     }
-    
+
     public static List getListByInt(Class c, int id, String attribute, String attributeOrder) {
         List lista = null;
         try {

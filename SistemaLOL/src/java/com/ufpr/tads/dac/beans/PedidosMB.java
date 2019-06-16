@@ -20,9 +20,9 @@ import javax.faces.bean.ViewScoped;
  *
  * @author Marcos
  */
-@ManagedBean(name = "pedidoCli")
+@ManagedBean(name = "pedidoMB")
 @ViewScoped
-public class PedidosCliMB implements Serializable {
+public class PedidosMB implements Serializable {
 
     @ManagedProperty(value="#{login.cliente}")
     private Cliente cli;
@@ -60,7 +60,8 @@ public class PedidosCliMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        pedidos = PedidoFacade.getPedidosCliente(cli.getId());
+        pedidos = (cli != null) ? PedidoFacade.getPedidosCliente(cli.getId()) :
+            PedidoFacade.getListaPedidos();
     }
     
     public void check() {
