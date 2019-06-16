@@ -8,8 +8,6 @@ package facade;
 import dao.LoginDao;
 import java.util.List;
 import javax.persistence.EntityManager;
-import model.T05User;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *

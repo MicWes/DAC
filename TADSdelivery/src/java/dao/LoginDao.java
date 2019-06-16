@@ -6,12 +6,8 @@
 package dao;
 
 import model.T05User;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.LogicalExpression;
-import org.hibernate.criterion.Restrictions;
 import util.Encriptador;
 import util.HibernateUtil;
 

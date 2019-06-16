@@ -22,6 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import util.Encriptador;
 
 /**
  *
@@ -160,6 +161,7 @@ public class T05User implements Serializable {
     }
 
     public void setUserPassword(String userPassword) {
+        userPassword = Encriptador.toMD5(userPassword);
         this.userPassword = userPassword;
     }
 

@@ -8,17 +8,13 @@
 
     <ui:composition template="/template.xhtml">
 
-
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListT05UserTitle}"></h:outputText>
-        </ui:define>
         
         <ui:define name="menu">
             <h:form id="menuForm">
                 <p:menubar>
                     <p:menuitem value="Entregas" outcome="/t06Delivery/List.xhtml" />
                     <p:menuitem value="Usuários" outcome="/t05User/List.xhtml" />  
-                    
+                    <p:menuitem value="Sair" onclick=""/> 
                 </p:menubar>
             </h:form>
         </ui:define>
