@@ -6,37 +6,68 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title><ui:insert name="title">TADS Delivery</ui:insert></title>
-        <h:outputStylesheet library="css" name="jsfcrud.css"/>
-        <h:outputScript library="js" name="jsfcrud.js"/>
-    </h:head>
-    <h:body>
-        <p:growl id="growl"/>
+   <ui:composition>
 
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="TADS Delivery">
-                <h:form id="menuForm">
-                    <p:menubar>
-                        <p:menuitem value="Voltar" outcome="/index" icon="ui-icon-left"/>
-                    </p:menubar>
-                </h:form>
-            </p:layoutUnit>
+        <p:dialog id="Cadastro" widgetVar="Cadastro" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateT05UserTitle}">
+            <h:form id="CadastroForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t05UserController.selected != null}">
+                                             
+                        <p:outputLabel value="Nome:" for="userName" />
+                        <p:inputText id="userName" value="#{t05UserController.selected.userName}" title="#{bundle.CreateT05UserTitle_userName}" required="true"/>
 
-            <p:layoutUnit position="south" size="60">
-                <ui:insert name="footer"/>
-            </p:layoutUnit>
+                        <p:outputLabel value="CPF:" for="userCpf" />
+                        <p:inputText id="userCpf" value="#{t05UserController.selected.userCpf}" title="#{bundle.CreateT05UserTitle_userCpf}" required="true"/>
 
-            <p:layoutUnit position="center">
-               
-            </p:layoutUnit>
+                        <p:outputLabel value="Telefone:" for="userPhone" />
+                        <p:inputText id="userPhone" value="#{t05UserController.selected.userPhone}" title="#{bundle.CreateT05UserTitle_userPhone}" required="true"/>
 
-        </p:layout>
+                        <p:outputLabel value="E-mail:" for="userEmail" />
+                        <p:inputText id="userEmail" value="#{t05UserController.selected.userEmail}" title="#{bundle.CreateT05UserTitle_userEmail}" required="true"/>
+
+                         <p:outputLabel value="Estado:" for="userState" />
+                        <p:selectOneMenu id="userState">
+                            <f:selectItems value="#{t03StateController.itemsAvailableSelectOne}"
+                                           var="userStateItem"
+                                           itemValue="#{userStateItem}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Cidade:" for="userCity" />
+                        <p:selectOneMenu id="userCity">
+                            <f:selectItems value="#{t04CityController.itemsAvailableSelectOne}"
+                                           var="userCityItem"
+                                           itemValue="#{userCityItem}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Endereço:" for="userAdress" />
+                        <p:inputText id="userAdress" value="#{t05UserController.selected.userAdress}" title="#{bundle.CreateT05UserTitle_userAdress}" />
+
+                        
+                        <p:outputLabel value="Usuário:" for="userType" />
+                        <p:selectOneMenu id="userType">
+                            <f:selectItems value="#{t02UserTypeController.itemsAvailableSelectOne}"
+                                           var="userTypeItem"
+                                           itemValue="#{userTypeItem}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Login:" for="userLogin" />
+                        <p:inputText id="userLogin" value="#{t05UserController.selected.userLogin}" title="#{bundle.CreateT05UserTitle_userLogin}" required="true"/>
 
 
+                        <p:outputLabel value="Senha:" for="userPassword" />
+                        <p:inputText id="userPassword" value="#{t05UserController.selected.userPassword}" title="#{bundle.CreateT05UserTitle_userPassword}" required="true"/>
+                        
+                        <p:outputLabel value="Confirmação de Senha:" />
+                        <p:inputText id="userConfPassword" required="true"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{t05UserController.create}" value="#{bundle.Save}" oncomplete="handleSubmit(args,'T05UserCreate');" onclick="CadastroDialog.hide()"/>
 
-    </h:body>
+               <p:commandButton value="#{bundle.Cancel}" onclick="CadastroDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
 
+    </ui:composition>
 
 </html>

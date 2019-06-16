@@ -12,8 +12,6 @@
             <h:form id="T05UserCreateForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{t05UserController.selected != null}">
-                        <p:outputLabel value="#{bundle.CreateT05UserLabel_userId}" for="userId" />
-                        <p:inputText id="userId" value="#{t05UserController.selected.userId}" title="#{bundle.CreateT05UserTitle_userId}" required="true" requiredMessage="#{bundle.CreateT05UserRequiredMessage_userId}"/>
                         <p:outputLabel value="#{bundle.CreateT05UserLabel_userName}" for="userName" />
                         <p:inputText id="userName" value="#{t05UserController.selected.userName}" title="#{bundle.CreateT05UserTitle_userName}" />
                         <p:outputLabel value="#{bundle.CreateT05UserLabel_userCpf}" for="userCpf" />
