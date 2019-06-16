@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/base_cliente.xhtml">
+
+    <h:head>
+        <title>Lol - Pedidos</title>
+    </h:head>
+    <ui:define name="general_content">
+
+        <h:outputLabel class="title" 
+                       rendered="#{login.funcionario ne null}">
+            Olá #{login.funcionario.nome}
+        </h:outputLabel>  
+        <h:outputLabel class="title" 
+                       rendered="#{login.cliente ne null}">
+            Olá #{login.cliente.nome}
+        </h:outputLabel>  
+        <h:outputLabel class="subtitle">Lista de Pedidos</h:outputLabel>  
+
+        <p:dataTable var="pedido" value="#{pedidoMB.pedidos}">
+            <p:column headerText="Número do Pedido">
+                <h:outputText value="#{pedido.id}" />
+            </p:column>
+            
+            <p:column headerText="Id do Cliente"
+                      rendered="#{login.funcionario ne null}">
+                <h:outputText value="##{pedido.idCli}"/>
+            </p:column>
+            
+            <p:column headerText="Data do Pedido">
+                <h:outputText value="#{pedido.horaPedido}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="Status">
+                <h:outputText value="#{pedido.status}" />
+            </p:column>
+
+            <p:column headerText="Ações">
+                <p:menubar style="background-color: transparent">
+                    <p:menuitem url="visualizar_pedido.xhtml?id=#{pedido.id}" 
+                                icon="pi pi-eye" 
+                                title="Visualizar Pedido"/>
+                    <p:menuitem url="deletar?id=#{pedido.id}" 
+                                icon="pi pi-times red" 
+                                title="Cancelar Pedido"
+                                style="color: red"/>
+                    <p:menuitem url="altped.xhtml"
+                                icon="pi pi-cog"
+                                title="Alterar Status"
+                                rendered="#{login.funcionario ne null}"/>
+                    <p:menuitem url="entrega.xhtml"
+                                icon="pi pi-external-link"
+                                title="Solicitar Entrega"
+                                rendered="#{login.funcionario ne null}"/>
+                </p:menubar>
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+</ui:composition>

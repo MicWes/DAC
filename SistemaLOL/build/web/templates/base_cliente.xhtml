@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui">
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+    <h:head/>
+
+    <h:body>
+
+        <h:form>  
+            <p:growl id="messages"/>
+
+            <p:menubar>
+                <p:menuitem value="Home" 
+                            url="pedidos.xhtml" 
+                            icon="pi pi-home" 
+                            title="Home"/>
+                <p:menuitem value="Novo Pedido" 
+                            url="novo_pedido.xhtml" 
+                            icon="pi pi-shopping-cart" 
+                            title="Realizar Novo Pedido"/>
+                <p:menuitem value="Roupas"
+                            url="roupas.xhtml"
+                            rendered="#{login.funcionario ne null}"
+                            icon="pi pi-tags"
+                            title="Visualizar/Cadastrar Roupas"/>
+                <f:facet name="options">
+                    <p:commandButton action="#{login.logout()}"
+                                     value="Sair"
+                                     icon="pi pi-sign-out" 
+                                     title="Fazer Logoff"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+        
+        <ui:insert name="general_content" />
+
+    </h:body>
+
+</ui:composition>

@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/templates/base_cliente.xhtml">
+
+    <h:head>
+        <title>Lol - Pedido nº #{id}</title>
+    </h:head>
+    <ui:define name="general_content">
+
+        <h:form id="form1">
+            <p:panel header="Fazer Pedido"> 
+                <p:panelGrid columns="2">
+                    <h:outputLabel for="ra" value="Roupa: " />
+                    <h:selectOneMenu id="ra"
+                                     value="#{novoPedido.idRoupa}"
+                                     required="true">
+                        <f:selectItem itemLabel="-- selecione --" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{novoPedido.roupas}" var="r" 
+                                       itemLabel="#{r.tipo}" itemValue="#{r.id}" />
+                    </h:selectOneMenu>
+                    <h:outputLabel for="qtd" value="Quantidade: " />
+                    <p:spinner value="#{novoPedido.qtd}" min="1"/>
+                    <f:facet name="footer">
+                        <h:commandButton value="Adicionar" action="#{novoPedido.adicionar()}" />
+                    </f:facet>
+                </p:panelGrid>
+                <p:spacer height="30px;"/>
+
+                <p:dataTable 
+                    id="dt"
+                    value="#{novoPedido.itens}" 
+                    var="i"
+                    editable="true"
+                    widgetVar="50" 
+                    rendered="#{novoPedido.itens.size() ne 0}">
+                    <f:facet name="header">  
+                        Itens do Pedido
+                    </f:facet>
+                    <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Roupa" />  
+                        </f:facet>
+                        <h:outputText value="#{i.roupa.tipo}" />  
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Quantidade" />  
+                        </f:facet>
+                        <h:outputText value="#{i.qtd}"/>  
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">  
+                            <h:outputText value="Subtotal" />  
+                        </f:facet>
+                        <h:outputText value="#{i.qtd * i.roupa.valor}">
+                            <f:convertNumber currencyCode="BRL" type="currency" />
+                        </h:outputText>
+                    </p:column>               
+                    <p:column headerText="Options">  
+                        <h:commandButton action="#{novoPedido.delete(i)}" value="X"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <h:outputText value="Prazo de entrega: "/>
+                        <h:outputText value="#{novoPedido.prazo}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                        </h:outputText>
+                        <p:spacer width="40px"/> |
+                        <p:spacer width="40px"/>
+                        <h:outputText value="Total: "/>
+                        <h:outputText value="#{novoPedido.total}" >
+                            <f:convertNumber currencyCode="BRL" type="currency" />
+                        </h:outputText>
+                        <p:spacer width="40px"/> |
+                        <p:spacer width="40px"/>
+                        <p:commandButton value="Fazer Pedido" action="#{novoPedido.fazerPedido()}"/>
+                    </f:facet>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
