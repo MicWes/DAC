@@ -23,9 +23,13 @@ public class PedidoFacade {
         Pedido p = (Pedido) GenericDao.getByInt(Pedido.class, "id", pedido);
         List<ItemPedido> itens = (List<ItemPedido>) GenericDao.getListByInt(ItemPedido.class, pedido, "idPedido", null);
         List<Roupa> roupas = (List<Roupa>) GenericDao.getList(Roupa.class, "id"); //ordena pelo id pra poder pegar pelo indice no for
+        Map<Integer, Roupa> mapRoupas = new HashMap<>();
+        for (Roupa r : roupas) {
+            mapRoupas.put(r.getId(), r);
+        }
         Map<Roupa, Integer> map = new HashMap<>();
         for (ItemPedido item : itens) {
-            map.put(item.getRoupa(), item.getQtd());
+            map.put(mapRoupas.get(item.getIdRoupa()), item.getQtd());
         }
         p.setItens(map);
         return p;
@@ -44,11 +48,9 @@ public class PedidoFacade {
         if (idPedido > 0) {
             for (ItemPedido ip : pedido.getItensPedido()) {
                 ip.setIdPedido(idPedido);
+                int ok = GenericDao.inserir(ip);
             }
-            int ok = GenericDao.inserir(pedido.getItensPedido());
-            if (ok > 0) {
-                return true;
-            }
+            return true;
         }
         return false;
     }

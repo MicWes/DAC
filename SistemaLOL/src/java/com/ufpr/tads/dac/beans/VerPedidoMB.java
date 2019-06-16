@@ -6,8 +6,11 @@
 package com.ufpr.tads.dac.beans;
 
 import com.ufpr.tads.dac.hib.facade.PedidoFacade;
+import com.ufpr.tads.dac.hib.facade.SystemFacade;
 import com.ufpr.tads.dac.model.Pedido;
 import com.ufpr.tads.dac.model.Roupa;
+import com.ufpr.tads.dac.model.Status;
+import com.ufpr.tads.dac.utils.Utils;
 import java.util.ArrayList;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -28,6 +31,17 @@ public class VerPedidoMB {
     private Pedido pedido;
     private Map<Roupa, Integer> map;
     private ArrayList<Roupa> keys = new ArrayList<>();
+    private final Status[] status = Status.values();
+    private Status newStatus;
+
+    @PostConstruct
+    public void init() {
+        String param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
+        idPedido = Integer.parseInt(param);
+        pedido = PedidoFacade.getPedido(idPedido);
+        map = pedido.getItens();
+        myKeys();
+    }
 
     public int getIdPedido() {
         return idPedido;
@@ -48,7 +62,7 @@ public class VerPedidoMB {
     public Map<Roupa, Integer> getMap() {
         return map;
     }
-    
+
     public ArrayList<Roupa> getKeys() {
         return keys;
     }
@@ -59,12 +73,22 @@ public class VerPedidoMB {
         }
     }
 
-    @PostConstruct
-    public void init() {
-        String param = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        idPedido = Integer.parseInt(param);
-        pedido = PedidoFacade.getPedido(idPedido);
-        map = pedido.getItens();
-        myKeys();
+    public Status[] getStatus() {
+        return status;
     }
+
+    public Status getNewStatus() {
+        return newStatus;
+    }
+
+    public void setNewStatus(Status newStatus) {
+        this.newStatus = newStatus;
+    }
+
+    public void alterarStatus() {
+        pedido.setStatus(newStatus.getNum());
+        SystemFacade.alterar(pedido);
+        Utils.message("Info:", "Status Alterado");
+    }
+
 }

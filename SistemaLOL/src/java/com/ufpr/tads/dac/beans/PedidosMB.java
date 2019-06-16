@@ -6,9 +6,11 @@
 package com.ufpr.tads.dac.beans;
 
 import com.ufpr.tads.dac.hib.facade.PedidoFacade;
+import com.ufpr.tads.dac.hib.facade.SystemFacade;
 import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.Pedido;
 import com.ufpr.tads.dac.model.Status;
+import com.ufpr.tads.dac.utils.Utils;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,11 +26,17 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class PedidosMB implements Serializable {
 
-    @ManagedProperty(value="#{login.cliente}")
+    @ManagedProperty(value = "#{login.cliente}")
     private Cliente cli;
     private List<Pedido> pedidos;
-    private final Status[] status = Status.values();;
-    int teste;
+    private final Status[] status = Status.values();
+    private Status newStatus;
+
+    @PostConstruct
+    public void init() {
+        pedidos = (cli != null) ? PedidoFacade.getPedidosCliente(cli.getId())
+                : PedidoFacade.getListaPedidos();
+    }
 
     public List<Pedido> getPedidos() {
         return pedidos;
@@ -41,7 +49,7 @@ public class PedidosMB implements Serializable {
     public Cliente getCli() {
         return cli;
     }
-    
+
     public Status[] getStatus() {
         return status;
     }
@@ -49,23 +57,25 @@ public class PedidosMB implements Serializable {
     public void setCli(Cliente cli) {
         this.cli = cli;
     }
-    
-    public void setTeste(int teste) {
-        this.teste = teste;
-    }
-    
-    public int getTeste() {
-        return teste;
+
+    public Status getNewStatus() {
+        return newStatus;
     }
 
-    @PostConstruct
-    public void init() {
-        pedidos = (cli != null) ? PedidoFacade.getPedidosCliente(cli.getId()) :
-            PedidoFacade.getListaPedidos();
+    public void setNewStatus(Status newStatus) {
+        this.newStatus = newStatus;
     }
-    
-    public void check() {
-        int a = 0;
+
+    public void alterarStatus(Pedido pedido) {
+        pedido.setStatus(newStatus.getNum());
+        SystemFacade.alterar(pedido);
+        Utils.message("Info:", "Status Alterado");
+    }
+
+    public void excluirPedido(Pedido pedido) {
+        SystemFacade.excluir(pedido);
+        pedidos.remove(pedido);
+        Utils.message("Info:", "Pedido excluído com sucesso!");
     }
 
 }

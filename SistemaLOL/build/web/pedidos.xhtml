@@ -8,9 +8,11 @@
                 template="/templates/base_cliente.xhtml">
 
     <h:head>
-        <title>Lol - Pedidos</title>
+        Lol - Pedidos
     </h:head>
     <ui:define name="general_content">
+
+        <p:growl id="messages" showDetail="true"/>
 
         <h:outputLabel class="title" 
                        rendered="#{login.funcionario ne null}">
@@ -22,46 +24,58 @@
         </h:outputLabel>  
         <h:outputLabel class="subtitle">Lista de Pedidos</h:outputLabel>  
 
-        <p:dataTable var="pedido" value="#{pedidoMB.pedidos}">
-            <p:column headerText="Número do Pedido">
-                <h:outputText value="#{pedido.id}" />
-            </p:column>
-            
-            <p:column headerText="Id do Cliente"
-                      rendered="#{login.funcionario ne null}">
-                <h:outputText value="##{pedido.idCli}"/>
-            </p:column>
-            
-            <p:column headerText="Data do Pedido">
-                <h:outputText value="#{pedido.horaPedido}">
-                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-                </h:outputText>
-            </p:column>
+        <h:form id="form1">
+            <p:dataTable var="pedido" value="#{pedidoMB.pedidos}" id='dt'>
+                <p:column headerText="Número do Pedido">
+                    <h:outputText value="#{pedido.id}" />
+                </p:column>
 
-            <p:column headerText="Status">
-                <h:outputText value="#{pedido.status}" />
-            </p:column>
+                <p:column headerText="Id do Cliente"
+                          rendered="#{login.funcionario ne null}">
+                    <h:outputText value="##{pedido.idCli}"/>
+                </p:column>
+                <p:column headerText="Data do Pedido">
+                    <h:outputText value="#{pedido.horaPedido}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Status">
+                    <h:outputText value="#{pedido.status}" />
+                </p:column>
 
-            <p:column headerText="Ações">
-                <p:menubar style="background-color: transparent">
-                    <p:menuitem url="visualizar_pedido.xhtml?id=#{pedido.id}" 
-                                icon="pi pi-eye" 
-                                title="Visualizar Pedido"/>
-                    <p:menuitem url="deletar?id=#{pedido.id}" 
-                                icon="pi pi-times red" 
-                                title="Cancelar Pedido"
-                                style="color: red"/>
-                    <p:menuitem url="altped.xhtml"
-                                icon="pi pi-cog"
-                                title="Alterar Status"
-                                rendered="#{login.funcionario ne null}"/>
-                    <p:menuitem url="entrega.xhtml"
-                                icon="pi pi-external-link"
-                                title="Solicitar Entrega"
-                                rendered="#{login.funcionario ne null}"/>
-                </p:menubar>
-            </p:column>
-        </p:dataTable>
+                <p:column headerText="Ações">
+                    <h:form>
+                        <p:menubar style="background-color: transparent">
+                            <p:menuitem url="visualizar_pedido.xhtml?id=#{pedido.id}" 
+                                        icon="pi pi-eye" 
+                                        title="Visualizar Pedido"/>
+                            <p:menuitem icon="pi pi-times red" 
+                                        title="Excluir Pedido"
+                                        action="#{pedidoMB.excluirPedido(pedido)}"
+                                        update="messages"
+                                        style="color: red">
+                                <p:confirm header="Confirmação" 
+                                           message="Excluir o Pedido?" 
+                                           icon="pi pi-exclamation-triangle" />
+                            </p:menuitem>
+                            <p:menuitem icon="pi pi-cog"
+                                        title="Alterar Status"
+                                        rendered="false">                       
+                            </p:menuitem>
+                            <p:menuitem url="entrega.xhtml"
+                                        icon="pi pi-external-link"
+                                        title="Solicitar Entrega"
+                                        rendered="#{login.funcionario ne null}"/>
+                        </p:menubar>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update=":form1:dt"/>
+            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+        </p:confirmDialog> 
 
     </ui:define>
 </ui:composition>

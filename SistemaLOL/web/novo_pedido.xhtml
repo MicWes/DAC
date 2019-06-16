@@ -7,10 +7,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/templates/base_cliente.xhtml">
 
-    <h:head>
-        <title>Lol - Pedido nº #{id}</title>
-    </h:head>
     <ui:define name="general_content">
+        <h:head>
+            <title>LOL - Novo Pedido</title>
+        </h:head>
+
+        <p:growl id="messages" showDetail="true"/>
 
         <h:form id="form1">
             <p:panel header="Fazer Pedido"> 
@@ -79,7 +81,7 @@
                         </h:outputText>
                         <p:spacer width="40px"/> |
                         <p:spacer width="40px"/>
-                        <p:commandButton value="Fazer Pedido" action="#{novoPedido.fazerPedido()}"/>
+                        <p:commandButton value="Fazer Pedido" action="#{novoPedido.fazerPedido()}" update="messages"/>
                     </f:facet>
                 </p:dataTable>
             </p:panel>
