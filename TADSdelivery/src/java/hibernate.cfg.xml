@@ -46,5 +46,13 @@ Contributor(s):
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/tads</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">admin</property>
+    <mapping class="model.T01DeliveryStatus"/>
+    <mapping class="model.T02UserType"/>
+    <mapping class="model.T03State"/>
+    <mapping class="model.T04City"/>
+    <mapping class="model.T05User"/>
+    <mapping class="model.T06Delivery"/>
+    <mapping class="model.T07Action"/>
+    <mapping class="model.T08Message"/>
   </session-factory>
 </hibernate-configuration>

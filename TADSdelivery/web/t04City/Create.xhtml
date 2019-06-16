@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T04CityCreateDlg" widgetVar="T04CityCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateT04CityTitle}">
+            <h:form id="T04CityCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t04CityController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateT04CityLabel_cityId}" for="cityId" />
+                        <p:inputText id="cityId" value="#{t04CityController.selected.cityId}" title="#{bundle.CreateT04CityTitle_cityId}" required="true" requiredMessage="#{bundle.CreateT04CityRequiredMessage_cityId}"/>
+                        <p:outputLabel value="#{bundle.CreateT04CityLabel_cityName}" for="cityName" />
+                        <p:inputText id="cityName" value="#{t04CityController.selected.cityName}" title="#{bundle.CreateT04CityTitle_cityName}" />
+                        <p:outputLabel value="#{bundle.CreateT04CityLabel_cityUf}" for="cityUf" />
+                        <p:inputText id="cityUf" value="#{t04CityController.selected.cityUf}" title="#{bundle.CreateT04CityTitle_cityUf}" />
+                        <p:outputLabel value="#{bundle.CreateT04CityLabel_cityState}" for="cityState" />
+                        <p:selectOneMenu id="cityState" value="#{t04CityController.selected.cityState}" >
+                            <f:selectItems value="#{t03StateController.itemsAvailableSelectOne}"
+                                           var="cityStateItem"
+                                           itemValue="#{cityStateItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{t04CityController.create}" value="#{bundle.Save}" update="display,:T04CityListForm:datalist,:growl" oncomplete="handleSubmit(args,'T04CityCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="T04CityCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

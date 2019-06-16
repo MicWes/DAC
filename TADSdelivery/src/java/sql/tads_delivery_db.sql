@@ -1,6 +1,6 @@
 ﻿create table T01_delivery_status (
 	status_id serial primary key,
-	name_id varchar(20)
+	name_id varchar(20) --status_name
 );
 
 create table T02_user_type (
@@ -68,3 +68,6 @@ create table T08_message (
 	constraint T08_T05_fk FOREIGN KEY (message_user) REFERENCES T05_user(user_id),
 	constraint T08_T06_fk FOREIGN KEY (message_delivery) REFERENCES T06_delivery(delivery_id)	
  );
+
+alter table t05_user
+add column user_password varchar(50)

@@ -1,12 +1,59 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>TADS Delivery</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+         <h:form>
+            <h:panelGrid columns="3">
+                <p:outputLabel value="Login:" />
+                <p:inputText id="usuario"
+                             value="#{login.login}"
+                             required="true"
+                             requiredMessage="Informe o login!"/>
+                <p:message for="usuario" styleClass="red" />
+                
+                <p:outputLabel value="Senha:" />
+                <p:password id="senha"
+                            value="#{login.password}"
+                               required="true"
+                               requiredMessage="Informe a senha!"/>
+                <p:message for="senha" styleClass="red" />
+                
+                <p:commandButton value="Login" action="#{login.autenticar()}"  />
+            </h:panelGrid>
+        </h:form>
+        <h:outputLink value="faces/cadastro.xhtml">Cadastre-se!</h:outputLink>
+        <hr />
+        <br /><br />
+        <h3>All Tables CRUD:</h3>
+        <h:link outcome="/t01DeliveryStatus/List" value="Show All T01DeliveryStatus Items"/>
+        <br />
+        <h:link outcome="/t02UserType/List" value="Show All T02UserType Items"/>
+        <br />
+        <h:link outcome="/t03State/List" value="Show All T03State Items"/>
+        <br />
+        <h:link outcome="/t04City/List" value="Show All T04City Items"/>
+        <br />
+        <h:link outcome="/t05User/List" value="Show All T05User Items"/>
+        <br />
+        <h:link outcome="/t06Delivery/List" value="Show All T06Delivery Items"/>
+        <br />
+        <h:link outcome="/t07Action/List" value="Show All T07Action Items"/>
+        <br />
+        <h:link outcome="/t08Message/List" value="Show All T08Message Items"/>
     </h:body>
+
+
+
+
+
+
+
+
 </html>
 

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T03StateEditDlg" widgetVar="T03StateEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditT03StateTitle}">
+            <h:form id="T03StateEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t03StateController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditT03StateLabel_stateId}" for="stateId" />
+                        <p:inputText id="stateId" value="#{t03StateController.selected.stateId}" title="#{bundle.EditT03StateTitle_stateId}" required="true" requiredMessage="#{bundle.EditT03StateRequiredMessage_stateId}"/>
+                        <p:outputLabel value="#{bundle.EditT03StateLabel_stateName}" for="stateName" />
+                        <p:inputText id="stateName" value="#{t03StateController.selected.stateName}" title="#{bundle.EditT03StateTitle_stateName}" />
+                        <p:outputLabel value="#{bundle.EditT03StateLabel_stateUf}" for="stateUf" />
+                        <p:inputText id="stateUf" value="#{t03StateController.selected.stateUf}" title="#{bundle.EditT03StateTitle_stateUf}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{t03StateController.update}" value="#{bundle.Save}" update="display,:T03StateListForm:datalist,:growl" oncomplete="handleSubmit(args, 'T03StateEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="T03StateEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

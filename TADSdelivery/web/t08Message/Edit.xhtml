@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T08MessageEditDlg" widgetVar="T08MessageEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditT08MessageTitle}">
+            <h:form id="T08MessageEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t08MessageController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditT08MessageLabel_messageId}" for="messageId" />
+                        <p:inputText id="messageId" value="#{t08MessageController.selected.messageId}" title="#{bundle.EditT08MessageTitle_messageId}" required="true" requiredMessage="#{bundle.EditT08MessageRequiredMessage_messageId}"/>
+                        <p:outputLabel value="#{bundle.EditT08MessageLabel_messageDescription}" for="messageDescription" />
+                        <p:inputText id="messageDescription" value="#{t08MessageController.selected.messageDescription}" title="#{bundle.EditT08MessageTitle_messageDescription}" />
+                        <p:outputLabel value="#{bundle.EditT08MessageLabel_messageUser}" for="messageUser" />
+                        <p:selectOneMenu id="messageUser" value="#{t08MessageController.selected.messageUser}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{t05UserController.itemsAvailableSelectOne}"
+                                           var="messageUserItem"
+                                           itemValue="#{messageUserItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditT08MessageLabel_messageDelivery}" for="messageDelivery" />
+                        <p:selectOneMenu id="messageDelivery" value="#{t08MessageController.selected.messageDelivery}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{t06DeliveryController.itemsAvailableSelectOne}"
+                                           var="messageDeliveryItem"
+                                           itemValue="#{messageDeliveryItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{t08MessageController.update}" value="#{bundle.Save}" update="display,:T08MessageListForm:datalist,:growl" oncomplete="handleSubmit(args, 'T08MessageEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="T08MessageEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

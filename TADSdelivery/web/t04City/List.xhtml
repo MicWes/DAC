@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListT04CityTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="T04CityListForm">
+                <p:panel header="#{bundle.ListT04CityTitle}">
+                    <p:dataTable id="datalist" value="#{t04CityController.items}" var="item"
+                                 selectionMode="single" selection="#{t04CityController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.cityId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListT04CityTitle_cityId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cityId}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListT04CityTitle_cityName}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cityName}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListT04CityTitle_cityUf}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cityUf}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListT04CityTitle_cityState}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cityState}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{t04CityController.prepareCreate}" update=":T04CityCreateForm" oncomplete="PF('T04CityCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":T04CityViewForm" oncomplete="PF('T04CityViewDialog').show()" disabled="#{empty t04CityController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":T04CityEditForm" oncomplete="PF('T04CityEditDialog').show()" disabled="#{empty t04CityController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{t04CityController.destroy}" update=":growl,datalist" disabled="#{empty t04CityController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

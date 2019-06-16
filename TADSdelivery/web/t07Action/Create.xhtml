@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="T07ActionCreateDlg" widgetVar="T07ActionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateT07ActionTitle}">
+            <h:form id="T07ActionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{t07ActionController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateT07ActionLabel_actionId}" for="actionId" />
+                        <p:inputText id="actionId" value="#{t07ActionController.selected.actionId}" title="#{bundle.CreateT07ActionTitle_actionId}" required="true" requiredMessage="#{bundle.CreateT07ActionRequiredMessage_actionId}"/>
+                        <p:outputLabel value="#{bundle.CreateT07ActionLabel_actionDescription}" for="actionDescription" />
+                        <p:inputText id="actionDescription" value="#{t07ActionController.selected.actionDescription}" title="#{bundle.CreateT07ActionTitle_actionDescription}" />
+                        <p:outputLabel value="#{bundle.CreateT07ActionLabel_actionDt}" for="actionDt" />
+                        <p:calendar id="actionDt" pattern="MM/dd/yyyy" value="#{t07ActionController.selected.actionDt}" title="#{bundle.EditT07ActionTitle_actionDt}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateT07ActionLabel_actionUser}" for="actionUser" />
+                        <p:selectOneMenu id="actionUser" value="#{t07ActionController.selected.actionUser}" >
+                            <f:selectItems value="#{t05UserController.itemsAvailableSelectOne}"
+                                           var="actionUserItem"
+                                           itemValue="#{actionUserItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateT07ActionLabel_actionDelivery}" for="actionDelivery" />
+                        <p:selectOneMenu id="actionDelivery" value="#{t07ActionController.selected.actionDelivery}" >
+                            <f:selectItems value="#{t06DeliveryController.itemsAvailableSelectOne}"
+                                           var="actionDeliveryItem"
+                                           itemValue="#{actionDeliveryItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{t07ActionController.create}" value="#{bundle.Save}" update="display,:T07ActionListForm:datalist,:growl" oncomplete="handleSubmit(args,'T07ActionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="T07ActionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
