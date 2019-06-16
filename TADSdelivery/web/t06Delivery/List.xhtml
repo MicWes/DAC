@@ -12,10 +12,18 @@
         <ui:define name="title">
             <h:outputText value="#{bundle.ListT06DeliveryTitle}"></h:outputText>
         </ui:define>
+        <ui:define name="menu">
+            <h:form id="menuForm">
+                <p:menubar>
+                    <p:menuitem value="Entregas" outcome="/t06Delivery/List.xhtml" />
+                    <p:menuitem value="Usuários" outcome="/t05User/List.xhtml" />               
+                </p:menubar>
+            </h:form>
+        </ui:define>
 
         <ui:define name="body">
             <h:form id="T06DeliveryListForm">
-                <p:panel header="#{bundle.ListT06DeliveryTitle}">
+                <p:panel header="Lista de Entregas">
                     <p:dataTable id="datalist" value="#{t06DeliveryController.items}" var="item"
                                  selectionMode="single" selection="#{t06DeliveryController.selected}"
                                  paginator="true"
@@ -29,31 +37,31 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryId}"/>
+                                <h:outputText value="Id"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryId}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryDescription}"/>
+                                <h:outputText value="Descrição"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryDescription}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryLocal}"/>
+                                <h:outputText value="Origem"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryLocal}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryDestiny}"/>
+                                <h:outputText value="Destino"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryDestiny}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryDtcad}"/>
+                                <h:outputText value="Data da Entrega"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryDtcad}">
                                 <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
@@ -61,21 +69,21 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryStatus}"/>
+                                <h:outputText value="Status"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryStatus}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT06DeliveryTitle_deliveryOwner}"/>
+                                <h:outputText value="Entregador"/>
                             </f:facet>
                             <h:outputText value="#{item.deliveryOwner}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{t06DeliveryController.prepareCreate}" update=":T06DeliveryCreateForm" oncomplete="PF('T06DeliveryCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":T06DeliveryViewForm" oncomplete="PF('T06DeliveryViewDialog').show()" disabled="#{empty t06DeliveryController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":T06DeliveryEditForm" oncomplete="PF('T06DeliveryEditDialog').show()" disabled="#{empty t06DeliveryController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{t06DeliveryController.destroy}" update=":growl,datalist" disabled="#{empty t06DeliveryController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Ciar" actionListener="#{t06DeliveryController.prepareCreate}" update=":T06DeliveryCreateForm" oncomplete="PF('T06DeliveryCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Visualizar" update=":T06DeliveryViewForm" oncomplete="PF('T06DeliveryViewDialog').show()" disabled="#{empty t06DeliveryController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":T06DeliveryEditForm" oncomplete="PF('T06DeliveryEditDialog').show()" disabled="#{empty t06DeliveryController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Remover" actionListener="#{t06DeliveryController.destroy}" update=":growl,datalist" disabled="#{empty t06DeliveryController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

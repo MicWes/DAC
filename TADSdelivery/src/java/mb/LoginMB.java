@@ -68,10 +68,10 @@ public class LoginMB implements Serializable{
         Object obj = AbstractFacade.autenticar(login, password);
         if (obj instanceof T05User) {
             gerente = (T05User)obj;
-            return "faces/t06Delivery/List.xhtml";
+            return "/t06Delivery/List.xhtml";
         } else if (obj instanceof T05User) {
             entregador = (T05User)obj;
-            return "faces/t07Action/List.xhtml";
+            return "/t07Action/List.xhtml";
         }
         return "index";
     }
