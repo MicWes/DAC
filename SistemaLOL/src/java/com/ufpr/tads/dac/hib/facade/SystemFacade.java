@@ -7,6 +7,7 @@ package com.ufpr.tads.dac.hib.facade;
 
 import com.ufpr.tads.dac.hib.dao.GenericDao;
 import com.ufpr.tads.dac.hib.dao.LoginDao;
+import com.ufpr.tads.dac.model.Cidade;
 import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.Estado;
 import com.ufpr.tads.dac.model.Funcionario;
@@ -47,8 +48,26 @@ public class SystemFacade {
         return (List<Estado>) GenericDao.getList(Estado.class);
     }
 
+    public static Cidade getCidade(int idCid) {
+        return (Cidade) GenericDao.getByInt(Cidade.class, "id", idCid);
+    }
+
     public static Object autenticar(String usuario, String senha) {
         LoginDao ld = new LoginDao();
         return ld.auth(usuario, senha);
+    }
+
+    public static String getEndereco(int idCli) {
+        String end = "";
+        Cliente c = (Cliente) GenericDao.getByInt(Cliente.class, "id", idCli);
+        if (c != null) {
+            end = c.getEndereco();
+            Cidade cid = getCidade(c.getCidade());
+            if (cid != null) {
+                end += ", " + cid.getNome() + " - " + cid.getEstado().getSigla();
+            }
+            return end;
+        }
+        return end;
     }
 }

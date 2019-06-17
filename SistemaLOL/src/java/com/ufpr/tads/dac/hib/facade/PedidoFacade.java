@@ -9,6 +9,8 @@ import com.ufpr.tads.dac.hib.dao.GenericDao;
 import com.ufpr.tads.dac.model.ItemPedido;
 import com.ufpr.tads.dac.model.Pedido;
 import com.ufpr.tads.dac.model.Roupa;
+import com.ufpr.tads.dac.model.Status;
+import com.ufpr.tads.dac.ws.Entregador;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class PedidoFacade {
     public static Pedido getPedido(int pedido) {
         Pedido p = (Pedido) GenericDao.getByInt(Pedido.class, "id", pedido);
         List<ItemPedido> itens = (List<ItemPedido>) GenericDao.getListByInt(ItemPedido.class, pedido, "idPedido", null);
-        List<Roupa> roupas = (List<Roupa>) GenericDao.getList(Roupa.class, "id"); //ordena pelo id pra poder pegar pelo indice no for
+        List<Roupa> roupas = (List<Roupa>) GenericDao.getList(Roupa.class, "id");
         Map<Integer, Roupa> mapRoupas = new HashMap<>();
         for (Roupa r : roupas) {
             mapRoupas.put(r.getId(), r);
@@ -55,4 +57,21 @@ public class PedidoFacade {
         return false;
     }
 
+    public static String solicitarEntrega(Pedido pedido) {
+        String endereco = SystemFacade.getEndereco(pedido.getIdCli());
+        String mensagem = "";
+        if (!"".equals(endereco)) {
+            pedido.setEndereco(endereco);
+            int result = Entregador.solicitarEntrega(pedido);
+            if (result == 200) {
+                pedido.setStatus(Status.ENT_SOL.getNum());
+                GenericDao.alterar(pedido);
+                return "Pedido de entrega solicitado";
+            } else {
+                return "Falha ao solicitar entrega";
+            }
+        } else {
+            return "Endereço inválido, entre em contato com o cliente";
+        }
+    }
 }

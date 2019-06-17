@@ -72,6 +72,10 @@ public class PedidosMB implements Serializable {
         Utils.message("Info:", "Status Alterado");
     }
 
+    public void solicitarEntrega(Pedido pedido) {
+        PedidoFacade.solicitarEntrega(pedido);
+    }
+
     public void excluirPedido(Pedido pedido) {
         SystemFacade.excluir(pedido);
         pedidos.remove(pedido);

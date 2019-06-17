@@ -39,7 +39,7 @@ public class Pedido implements Serializable {
     @Transient
     private List<ItemPedido> itensPedido;
     @Column(name = "pe_qtd_itens")
-    private int qtd_itens;
+    private int qtdItens;
     @Column(name = "pe_status")
     private int status;
     @Temporal(TemporalType.TIMESTAMP)
@@ -52,6 +52,8 @@ public class Pedido implements Serializable {
     private int idCli;
     @Column(name = "pe_preco")
     private double total;
+    @Transient
+    private String endereco;
 
     public Pedido() {
     }
@@ -70,7 +72,7 @@ public class Pedido implements Serializable {
 
     public void setItens(Map<Roupa, Integer> itens) {
         this.itens = itens;
-        this.qtd_itens = itens.values().stream().reduce(0, Integer::sum);
+        this.qtdItens = itens.values().stream().reduce(0, Integer::sum);
     }
 
     public List<ItemPedido> getItensPedido() {
@@ -82,11 +84,11 @@ public class Pedido implements Serializable {
     }
 
     public int getQtdItens() {
-        return qtd_itens;
+        return qtdItens;
     }
 
     public void setQtdItens(int qtd) {
-        this.qtd_itens = qtd;
+        this.qtdItens = qtd;
     }
 
     public String getStatus() {
@@ -128,6 +130,14 @@ public class Pedido implements Serializable {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
 }

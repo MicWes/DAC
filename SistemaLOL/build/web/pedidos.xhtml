@@ -24,7 +24,6 @@
         </h:outputLabel>  
         <h:outputLabel class="subtitle">Lista de Pedidos</h:outputLabel>  
 
-        <h:form id="form1">
             <p:dataTable var="pedido" value="#{pedidoMB.pedidos}" id='dt'>
                 <p:column headerText="Número do Pedido">
                     <h:outputText value="#{pedido.id}" />
@@ -62,18 +61,21 @@
                                         title="Alterar Status"
                                         rendered="false">                       
                             </p:menuitem>
-                            <p:menuitem url="entrega.xhtml"
+                            <p:menuitem action="#{pedidoMB.solicitarEntrega(pedido)}"
                                         icon="pi pi-external-link"
                                         title="Solicitar Entrega"
-                                        rendered="#{login.funcionario ne null}"/>
+                                        rendered="#{login.funcionario ne null}">
+                                <p:confirm header="Confirmação" 
+                                           message="Solicitar entrega para o pedido: Pedido?" 
+                                           icon="pi pi-exclamation-triangle" />
+                            </p:menuitem>
                         </p:menubar>
                     </h:form>
                 </p:column>
             </p:dataTable>
-        </h:form>
 
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" update=":form1:dt"/>
+            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
         </p:confirmDialog> 
 

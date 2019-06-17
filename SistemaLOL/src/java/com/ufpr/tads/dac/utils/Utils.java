@@ -50,8 +50,8 @@ public class Utils {
         return Date.from(amanhaCedo().atZone(ZoneId.systemDefault()).toInstant());
     }
 
-    public static void message(String what, String whom) {
-        FacesMessage msg = new FacesMessage(what, whom);
+    public static void message(String titulo, String detalhes) {
+        FacesMessage msg = new FacesMessage(titulo, detalhes);
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
