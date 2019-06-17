@@ -14,7 +14,7 @@
                 <p:menubar>
                     <p:menuitem value="Entregas" outcome="/t06Delivery/List.xhtml" />
                     <p:menuitem value="Usuários" outcome="/t05User/List.xhtml" />  
-                    <p:menuitem value="Sair" onclick=""/> 
+                    <p:menuitem value="Sair" onclick="#{login.logout()}" style="position: absolute; right: 6px;"/> 
                 </p:menubar>
             </h:form>
         </ui:define>

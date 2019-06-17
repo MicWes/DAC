@@ -8,7 +8,7 @@
 
    <ui:composition>
 
-        <p:dialog id="Cadastro" widgetVar="Cadastro" modal="true" resizable="false" appendTo="@(body)" header="Cadastro">
+        <p:dialog id="T05UserCreateDlg" widgetVar="CadastroDialog" modal="true" resizable="false" appendTo="@(body)" header="Cadastro">
             <h:form id="CadastroForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{t05UserController.selected != null}">
@@ -26,14 +26,14 @@
                         <p:inputText id="userEmail" value="#{t05UserController.selected.userEmail}" title="#{bundle.CreateT05UserTitle_userEmail}" required="true"/>
 
                          <p:outputLabel value="Estado:" for="userState" />
-                        <p:selectOneMenu id="userState">
+                        <p:selectOneMenu id="userState"  value="#{t05UserController.selected.userState}">
                             <f:selectItems value="#{t03StateController.itemsAvailableSelectOne}"
                                            var="userStateItem"
                                            itemValue="#{userStateItem}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel value="Cidade:" for="userCity" />
-                        <p:selectOneMenu id="userCity">
+                        <p:selectOneMenu id="userCity" value="#{t05UserController.selected.userCity}">
                             <f:selectItems value="#{t04CityController.itemsAvailableSelectOne}"
                                            var="userCityItem"
                                            itemValue="#{userCityItem}"/>
@@ -44,7 +44,7 @@
 
                         
                         <p:outputLabel value="Perfil:" for="userType" />
-                        <p:selectOneMenu id="userType">
+                        <p:selectOneMenu id="userType" value="#{t05UserController.selected.userType}">
                             <f:selectItems value="#{t02UserTypeController.itemsAvailableSelectOne}"
                                            var="userTypeItem"
                                            itemValue="#{userTypeItem}"/>

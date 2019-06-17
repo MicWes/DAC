@@ -8,25 +8,25 @@
 
     <ui:composition>
 
-        <p:dialog id="T06DeliveryViewDlg" widgetVar="T06DeliveryViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewT06DeliveryTitle}">
+        <p:dialog id="T06DeliveryViewDlg" widgetVar="T06DeliveryViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Visualizar">
             <h:form id="T06DeliveryViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{t06DeliveryController.selected != null}">
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryId}"/>
+                        <h:outputText value="Id:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryId}" title="#{bundle.ViewT06DeliveryTitle_deliveryId}"/>
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryDescription}"/>
+                        <h:outputText value="Descrição:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryDescription}" title="#{bundle.ViewT06DeliveryTitle_deliveryDescription}"/>
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryLocal}"/>
+                        <h:outputText value="Origem:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryLocal}" title="#{bundle.ViewT06DeliveryTitle_deliveryLocal}"/>
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryDestiny}"/>
+                        <h:outputText value="Destino:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryDestiny}" title="#{bundle.ViewT06DeliveryTitle_deliveryDestiny}"/>
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryDtcad}"/>
+                        <h:outputText value="Data da Entrega:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryDtcad}" title="#{bundle.ViewT06DeliveryTitle_deliveryDtcad}">
-                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                         </h:outputText>
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryStatus}"/>
+                        <h:outputText value="Status:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryStatus}" title="#{bundle.ViewT06DeliveryTitle_deliveryStatus}"/>
-                        <h:outputText value="#{bundle.ViewT06DeliveryLabel_deliveryOwner}"/>
+                        <h:outputText value="Entregador:"/>
                         <h:outputText value="#{t06DeliveryController.selected.deliveryOwner}" title="#{bundle.ViewT06DeliveryTitle_deliveryOwner}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="T06DeliveryViewDialog.hide()"/>

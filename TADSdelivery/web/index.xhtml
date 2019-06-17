@@ -27,7 +27,7 @@
                 <p:message for="senha" styleClass="red" />
                 
                 <p:commandButton value="Entrar" action="#{login.autenticar()}"  />
-                <p:commandButton id="createButton" icon="ui-icon-plus"   value="Cadastre-se" actionListener="#{t05UserController.prepareCreate}" oncomplete="PF('Cadastro').show()"/>
+                <p:commandButton id="createButton" icon="ui-icon-plus"   value="Cadastre-se" actionListener="#{t05UserController.prepareCreate}" oncomplete="PF('CadastroDialog').show()"/>
             </h:panelGrid>
         </h:form>
         
