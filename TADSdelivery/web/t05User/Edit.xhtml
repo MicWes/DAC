@@ -8,47 +8,56 @@
 
     <ui:composition>
 
-        <p:dialog id="T05UserEditDlg" widgetVar="T05UserEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditT05UserTitle}">
+        <p:dialog id="T05UserEditDlg" widgetVar="T05UserEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar">
             <h:form id="T05UserEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{t05UserController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userId}" for="userId" />
-                        <p:inputText id="userId" value="#{t05UserController.selected.userId}" title="#{bundle.EditT05UserTitle_userId}" required="true" requiredMessage="#{bundle.EditT05UserRequiredMessage_userId}"/>
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userName}" for="userName" />
-                        <p:inputText id="userName" value="#{t05UserController.selected.userName}" title="#{bundle.EditT05UserTitle_userName}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userCpf}" for="userCpf" />
-                        <p:inputText id="userCpf" value="#{t05UserController.selected.userCpf}" title="#{bundle.EditT05UserTitle_userCpf}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userLogin}" for="userLogin" />
-                        <p:inputText id="userLogin" value="#{t05UserController.selected.userLogin}" title="#{bundle.EditT05UserTitle_userLogin}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userAdress}" for="userAdress" />
-                        <p:inputText id="userAdress" value="#{t05UserController.selected.userAdress}" title="#{bundle.EditT05UserTitle_userAdress}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userPhone}" for="userPhone" />
-                        <p:inputText id="userPhone" value="#{t05UserController.selected.userPhone}" title="#{bundle.EditT05UserTitle_userPhone}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userEmail}" for="userEmail" />
-                        <p:inputText id="userEmail" value="#{t05UserController.selected.userEmail}" title="#{bundle.EditT05UserTitle_userEmail}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userPassword}" for="userPassword" />
-                        <p:inputText id="userPassword" value="#{t05UserController.selected.userPassword}" title="#{bundle.EditT05UserTitle_userPassword}" />
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userType}" for="userType" />
-                        <p:selectOneMenu id="userType" value="#{t05UserController.selected.userType}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
-                            <f:selectItems value="#{t02UserTypeController.itemsAvailableSelectOne}"
-                                           var="userTypeItem"
-                                           itemValue="#{userTypeItem}"/>
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userState}" for="userState" />
-                        <p:selectOneMenu id="userState" value="#{t05UserController.selected.userState}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <p:outputLabel value="Nome:" for="userName" />
+                        <p:inputText id="userName" value="#{t05UserController.selected.userName}" title="#{bundle.EditT05UserTitle_userName}" required="true"/>
+
+                        <p:outputLabel value="CPF:" for="userCpf" />
+                        <p:inputText id="userCpf" value="#{t05UserController.selected.userCpf}" title="#{bundle.EditT05UserTitle_userCpf}" required="true"/>
+
+                        <p:outputLabel value="Telefone:" for="userPhone" />
+                        <p:inputText id="userPhone" value="#{t05UserController.selected.userPhone}" title="#{bundle.EditT05UserTitle_userPhone}" required="true"/>
+
+                        <p:outputLabel value="E-mail:" for="userEmail" />
+                        <p:inputText id="userEmail" value="#{t05UserController.selected.userEmail}" title="#{bundle.EditT05UserTitle_userEmail}" required="true"/>
+
+                         <p:outputLabel value="Estado:" for="userState" />
+                        <p:selectOneMenu id="userState" value="#{t05UserController.selected.userState}">
                             <f:selectItems value="#{t03StateController.itemsAvailableSelectOne}"
                                            var="userStateItem"
                                            itemValue="#{userStateItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditT05UserLabel_userCity}" for="userCity" />
-                        <p:selectOneMenu id="userCity" value="#{t05UserController.selected.userCity}" >
-                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+
+                        <p:outputLabel value="Cidade:" for="userCity" />
+                        <p:selectOneMenu id="userCity" value="#{t05UserController.selected.userCity}">
                             <f:selectItems value="#{t04CityController.itemsAvailableSelectOne}"
                                            var="userCityItem"
                                            itemValue="#{userCityItem}"/>
                         </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Endereço:" for="userAdress" />
+                        <p:inputText id="userAdress" value="#{t05UserController.selected.userAdress}" title="#{bundle.EditT05UserTitle_userAdress}" />
+
+                        
+                        <p:outputLabel value="Perfil:" for="userType" />
+                        <p:selectOneMenu id="userType" value="#{t05UserController.selected.userType}">
+                            <f:selectItems value="#{t02UserTypeController.itemsAvailableSelectOne}"
+                                           var="userTypeItem"
+                                           itemValue="#{userTypeItem}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="Login:" for="userLogin" />
+                        <p:inputText id="userLogin" value="#{t05UserController.selected.userLogin}" title="#{bundle.EditT05UserTitle_userLogin}" required="true"/>
+
+
+                        <p:outputLabel value="Senha:" for="userPassword" />
+                        <p:inputText id="userPassword" title="#{bundle.EditT05UserTitle_userPassword}" />
+                        
+                        <p:outputLabel value="Confirmação de Senha:" />
+                        <p:inputText id="userConfPassword"/>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{t05UserController.update}" value="#{bundle.Save}" update="display,:T05UserListForm:datalist,:growl" oncomplete="handleSubmit(args, 'T05UserEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="T05UserEditDialog.hide()"/>

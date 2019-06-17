@@ -8,15 +8,21 @@
 
     <ui:composition template="/template.xhtml">
 
-
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ListT05UserTitle}"></h:outputText>
+        
+        <ui:define name="menu">
+            <h:form id="menuForm">
+                <p:menubar>
+                    <p:menuitem value="Entregas" outcome="/t06Delivery/List.xhtml" />
+                    <p:menuitem value="Usuários" outcome="/t05User/List.xhtml" />  
+                    <p:menuitem value="Sair" onclick="#{login.logout()}" style="position: absolute; right: 6px;"/> 
+                </p:menubar>
+            </h:form>
         </ui:define>
 
         <ui:define name="body">
            
             <h:form id="T05UserListForm">
-                <p:panel header="#{bundle.ListT05UserTitle}">
+                <p:panel header="Usuários">
                     <p:dataTable id="datalist" value="#{t05UserController.items}" var="item"
                                  selectionMode="single" selection="#{t05UserController.selected}"
                                  paginator="true"
@@ -30,75 +36,69 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userId}"/>
+                                <h:outputText value="Id"/>
                             </f:facet>
                             <h:outputText value="#{item.userId}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userName}"/>
+                                <h:outputText value="Nome"/>
                             </f:facet>
                             <h:outputText value="#{item.userName}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userCpf}"/>
+                                <h:outputText value="CPF"/>
                             </f:facet>
                             <h:outputText value="#{item.userCpf}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userLogin}"/>
+                                <h:outputText value="Login"/>
                             </f:facet>
                             <h:outputText value="#{item.userLogin}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userAdress}"/>
+                                <h:outputText value="Enderço"/>
                             </f:facet>
                             <h:outputText value="#{item.userAdress}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userPhone}"/>
+                                <h:outputText value="Telefone"/>
                             </f:facet>
                             <h:outputText value="#{item.userPhone}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userEmail}"/>
+                                <h:outputText value="E-mail"/>
                             </f:facet>
                             <h:outputText value="#{item.userEmail}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userPassword}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.userPassword}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userType}"/>
+                                <h:outputText value="Perfil"/>
                             </f:facet>
                             <h:outputText value="#{item.userType}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userState}"/>
+                                <h:outputText value="Estado"/>
                             </f:facet>
                             <h:outputText value="#{item.userState}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListT05UserTitle_userCity}"/>
+                                <h:outputText value="Cidade"/>
                             </f:facet>
                             <h:outputText value="#{item.userCity}"/>
                         </p:column>
                         <f:facet name="footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{t05UserController.prepareCreate}" update=":T05UserCreateForm" oncomplete="PF('T05UserCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":T05UserViewForm" oncomplete="PF('T05UserViewDialog').show()" disabled="#{empty t05UserController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":T05UserEditForm" oncomplete="PF('T05UserEditDialog').show()" disabled="#{empty t05UserController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{t05UserController.destroy}" update=":growl,datalist" disabled="#{empty t05UserController.selected}"/>
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Criar" actionListener="#{t05UserController.prepareCreate}" update=":T05UserCreateForm" oncomplete="PF('T05UserCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Visualizar" update=":T05UserViewForm" oncomplete="PF('T05UserViewDialog').show()" disabled="#{empty t05UserController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":T05UserEditForm" oncomplete="PF('T05UserEditDialog').show()" disabled="#{empty t05UserController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Remover" actionListener="#{t05UserController.destroy}" update=":growl,datalist" disabled="#{empty t05UserController.selected}"/>
                         </f:facet>
                     </p:dataTable>
                 </p:panel>

@@ -8,29 +8,27 @@
 
     <ui:composition>
 
-        <p:dialog id="T06DeliveryEditDlg" widgetVar="T06DeliveryEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditT06DeliveryTitle}">
+        <p:dialog id="T06DeliveryEditDlg" widgetVar="T06DeliveryEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar">
             <h:form id="T06DeliveryEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{t06DeliveryController.selected != null}">
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryId}" for="deliveryId" />
-                        <p:inputText id="deliveryId" value="#{t06DeliveryController.selected.deliveryId}" title="#{bundle.EditT06DeliveryTitle_deliveryId}" required="true" requiredMessage="#{bundle.EditT06DeliveryRequiredMessage_deliveryId}"/>
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryDescription}" for="deliveryDescription" />
-                        <p:inputText id="deliveryDescription" value="#{t06DeliveryController.selected.deliveryDescription}" title="#{bundle.EditT06DeliveryTitle_deliveryDescription}" />
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryLocal}" for="deliveryLocal" />
-                        <p:inputText id="deliveryLocal" value="#{t06DeliveryController.selected.deliveryLocal}" title="#{bundle.EditT06DeliveryTitle_deliveryLocal}" />
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryDestiny}" for="deliveryDestiny" />
-                        <p:inputText id="deliveryDestiny" value="#{t06DeliveryController.selected.deliveryDestiny}" title="#{bundle.EditT06DeliveryTitle_deliveryDestiny}" />
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryDtcad}" for="deliveryDtcad" />
-                        <p:calendar id="deliveryDtcad" pattern="MM/dd/yyyy HH:mm:ss" value="#{t06DeliveryController.selected.deliveryDtcad}" title="#{bundle.EditT06DeliveryTitle_deliveryDtcad}"  showOn="button"/>
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryStatus}" for="deliveryStatus" />
-                        <p:selectOneMenu id="deliveryStatus" value="#{t06DeliveryController.selected.deliveryStatus}" >
+                        <p:outputLabel value="Descrição:" for="deliveryDescription" />
+                        <p:inputText id="deliveryDescription" value="#{t06DeliveryController.selected.deliveryDescription}" title="#{bundle.EditT06DeliveryTitle_deliveryDescription}" required="true"/>
+                        <p:outputLabel value="Origem:" for="deliveryLocal" />
+                        <p:inputText id="deliveryLocal" value="#{t06DeliveryController.selected.deliveryLocal}" title="#{bundle.EditT06DeliveryTitle_deliveryLocal}" required="true"/>
+                        <p:outputLabel value="Destino:" for="deliveryDestiny" />
+                        <p:inputText id="deliveryDestiny" value="#{t06DeliveryController.selected.deliveryDestiny}" title="#{bundle.EditT06DeliveryTitle_deliveryDestiny}" required="true"/>
+                        <p:outputLabel value="Data de Entrega:" for="deliveryDtcad" />
+                        <p:calendar id="deliveryDtcad" pattern="MM/dd/yyyy HH:mm:ss" value="#{t06DeliveryController.selected.deliveryDtcad}" title="#{bundle.EditT06DeliveryTitle_deliveryDtcad}"  showOn="button" required="true"/>
+                        <p:outputLabel value="Status:" for="deliveryStatus" />
+                        <p:selectOneMenu id="deliveryStatus" value="#{t06DeliveryController.selected.deliveryStatus}"  required="true">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{t01DeliveryStatusController.itemsAvailableSelectOne}"
                                            var="deliveryStatusItem"
                                            itemValue="#{deliveryStatusItem}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="#{bundle.EditT06DeliveryLabel_deliveryOwner}" for="deliveryOwner" />
-                        <p:selectOneMenu id="deliveryOwner" value="#{t06DeliveryController.selected.deliveryOwner}" >
+                        <p:outputLabel value="Entregador:" for="deliveryOwner" />
+                        <p:selectOneMenu id="deliveryOwner" value="#{t06DeliveryController.selected.deliveryOwner}"  required="true">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
                             <f:selectItems value="#{t05UserController.itemsAvailableSelectOne}"
                                            var="deliveryOwnerItem"

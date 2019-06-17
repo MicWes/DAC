@@ -7,7 +7,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.enterprise.context.SessionScoped;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,12 +22,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import util.Encriptador;
-import util.HibernateUtil;
 
 /**
  *
@@ -96,6 +90,11 @@ public class T05User implements Serializable {
 
     public T05User() {
     }
+    
+    public T05User(String userLogin, String userPassword) {
+        this.userLogin = userLogin;
+        this.userPassword = userPassword;
+    }
 
     public T05User(Integer userId) {
         this.userId = userId;
@@ -162,6 +161,7 @@ public class T05User implements Serializable {
     }
 
     public void setUserPassword(String userPassword) {
+        userPassword = Encriptador.toMD5(userPassword);
         this.userPassword = userPassword;
     }
 
@@ -214,22 +214,6 @@ public class T05User implements Serializable {
 
     public void setT08MessageList(List<T08Message> t08MessageList) {
         this.t08MessageList = t08MessageList;
-    }
-
-    public Object auth(String login, String password) {
-        password = Encriptador.toMD5(password);
-        Object user = valida_login(login, password);
-        return user;
-    }
-
-    private Object valida_login(String login, String password) {
-        //criteria busca
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria crit = session.createCriteria(T05User.class);
-        crit.add(Restrictions.eq("user_login", login));
-        crit.add(Restrictions.eq("user_password", password));
-        return crit.uniqueResult();
     }
 
     @Override
