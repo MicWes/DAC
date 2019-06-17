@@ -36,10 +36,15 @@ public class Autenticador implements PhaseListener {
         if ("/novo_pedido.xhtml".equals(context.getViewRoot().getViewId())) {
             return;
         }
-        if("/roupas.xhtml".equals(context.getViewRoot().getViewId())){
+        if ("/roupas.xhtml".equals(context.getViewRoot().getViewId())) {
             return;
         }
-
+        if ("/relatorios.xhtml".equals(context.getViewRoot().getViewId())) {
+            return;
+        }
+        if ("/cadastrof.xhtml".equals(context.getViewRoot().getViewId())) {
+            return;
+        }
         LoginMB lmb = context.getApplication().
                 evaluateExpressionGet(context, "#{login}", LoginMB.class);
         if (!lmb.isLogado()) {
@@ -48,7 +53,6 @@ public class Autenticador implements PhaseListener {
             handler.handleNavigation(context, null, "login?faces-redirect=true");
             context.renderResponse();
         }
-
     }
 
     @Override

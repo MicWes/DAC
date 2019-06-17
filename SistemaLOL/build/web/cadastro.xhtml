@@ -14,7 +14,7 @@
         <h1>Cliente novo!</h1>
         <h2>Informe seus dados</h2>
         <h:form>
-            <p:growl/>
+            <p:growl id="messages" showDetail="true"/>
             <h:panelGrid columns="4">
                 <p:outputLabel value="Nome:" /> 
                 <p:inputText id="nome" value="#{cadCli.cliente.nome}"
@@ -74,7 +74,7 @@
                 </p:selectOneMenu>
 
             </h:panelGrid>
-            <h:commandButton action="#{cadCli.cadastrar}" value="Cadastrar"/>
+            <p:commandButton action="#{cadCli.cadastrar}" value="Cadastrar" update="messages"/>
         </h:form>
         <p:link value="Voltar" href="index.xhtml"/>
     </h:body>

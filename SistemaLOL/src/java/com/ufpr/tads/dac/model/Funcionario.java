@@ -6,6 +6,8 @@
 package com.ufpr.tads.dac.model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,21 +20,21 @@ import javax.persistence.TemporalType;
  *
  * @author Marcos
  */
-
 @Entity
-@Table(name="tb_funcionario")
+@Table(name = "tb_funcionario")
 public class Funcionario implements Serializable {
+
     @Id
-    @Column (name="fu_matricula", updatable=false, nullable=false)
+    @Column(name = "fu_matricula", updatable = false, nullable = false)
     private String matricula;
-    @Column (name="fu_email")
+    @Column(name = "fu_email")
     private String email;
-    @Column (name="fu_nome")
+    @Column(name = "fu_nome")
     private String nome;
-    @Column (name="fu_senha")
+    @Column(name = "fu_senha")
     private String senha;
     @Temporal(TemporalType.DATE)
-    @Column (name="fu_datanasc")
+    @Column(name = "fu_datanasc")
     private Date dataNasc;
 
     public Funcionario() {
@@ -74,8 +76,8 @@ public class Funcionario implements Serializable {
         return dataNasc;
     }
 
-    public void setDataNasc(Date dataNasc) {
-        this.dataNasc = dataNasc;
+    public void setDataNasc(String dataNasc) throws ParseException {
+        this.dataNasc = new SimpleDateFormat("dd/MM/yyyy").parse(dataNasc);
     }
 
 }

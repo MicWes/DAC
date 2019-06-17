@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.PrimeFacesContext;
 
 /**
  *
@@ -52,9 +53,9 @@ public class Utils {
 
     public static void message(String titulo, String detalhes) {
         FacesMessage msg = new FacesMessage(titulo, detalhes);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        FacesContext.getCurrentInstance().addMessage("messages", msg);
     }
-    
+
     public static void message(String what) {
         message(what, "");
     }

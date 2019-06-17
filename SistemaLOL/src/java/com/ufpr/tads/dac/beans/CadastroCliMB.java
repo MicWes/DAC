@@ -10,6 +10,7 @@ import com.ufpr.tads.dac.model.Cidade;
 import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.Estado;
 import com.ufpr.tads.dac.utils.Encriptador;
+import com.ufpr.tads.dac.utils.Utils;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +37,7 @@ public class CadastroCliMB implements Serializable {
     private Map<String, String> cidades;
     private Map<String, Estado> estSelect;
     private Map<String, Cidade> cidSelect;
-    
+
     @PostConstruct
     public void init() {
         cliente = new Cliente();
@@ -103,10 +104,10 @@ public class CadastroCliMB implements Serializable {
     public String cadastrar() {
         cliente.setSenha(Encriptador.toMD5(cliente.getSenha()));
         cliente.setCidade(cidSelect.get(cidade).getId());
-        SystemFacade.inserir(cliente);
-        FacesMessage msg = new FacesMessage("msg", "msg");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        return "index";
+        if (SystemFacade.inserirCliente(cliente)) {
+            return "index";
+        }
+        return "";
     }
 
 }

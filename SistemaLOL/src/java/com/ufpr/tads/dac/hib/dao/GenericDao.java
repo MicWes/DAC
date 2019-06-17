@@ -46,12 +46,13 @@ public class GenericDao {
         }
     }
 
-    public static void alterar(Object item) {
+    public static int alterar(Object item) {
+        Object ck = null;
         try {
             Session session = HibernateUtil.getSessionFactory().openSession();
             Transaction tx = session.beginTransaction();
             try {
-                session.merge(item);
+                ck = (Object) session.merge(item);
                 tx.commit();
             } catch (Exception ex) {
                 tx.rollback();
@@ -63,6 +64,11 @@ public class GenericDao {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        if (ck != null) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 

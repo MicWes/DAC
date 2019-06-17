@@ -8,6 +8,7 @@ package com.ufpr.tads.dac.beans;
 import com.ufpr.tads.dac.hib.facade.SystemFacade;
 import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.Funcionario;
+import com.ufpr.tads.dac.utils.Utils;
 import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -57,16 +58,16 @@ public class LoginMB implements Serializable {
     
     public String autenticar() {
         Object obj = SystemFacade.autenticar(usuario, senha);
-        FacesMessage msg = new FacesMessage("Login message","basically");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
         if (obj instanceof Funcionario) {
             funcionario = (Funcionario) obj;
+            Utils.message("Info", "Autenticado com sucesso");
             return "pedidos";
         } else if (obj instanceof Cliente) {
             cliente = (Cliente) obj;
+            Utils.message("Info", "Autenticado com sucesso");
             return "pedidos";
         }
-        return "index";
+        return "index?id=1";
     }
     
     public String logout() {

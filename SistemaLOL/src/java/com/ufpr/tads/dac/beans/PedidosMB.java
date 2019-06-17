@@ -74,12 +74,23 @@ public class PedidosMB implements Serializable {
 
     public void solicitarEntrega(Pedido pedido) {
         PedidoFacade.solicitarEntrega(pedido);
+        Utils.message("Info:", "Entrega solicitada");
     }
 
-    public void excluirPedido(Pedido pedido) {
-        SystemFacade.excluir(pedido);
-        pedidos.remove(pedido);
-        Utils.message("Info:", "Pedido excluído com sucesso!");
+    public void realizarPagamento(Pedido pedido) {
+        pedido.setStatus(Status.AGD_ENT.getNum());
+        SystemFacade.alterar(pedido);
+        Utils.message("Info:", "Pagamento confirmado!");
+    }
+
+    public void cancelarPedido(Pedido pedido) {
+        if (!"Aguardando Lavagem".equals(pedido.getStatus())) {
+            Utils.message("Info", "Esse pedido não pode mais ser cancelado");
+        } else {
+            pedido.setStatus(Status.CANCEL.getNum());
+            SystemFacade.alterar(pedido);
+            Utils.message("Info:", "Pedido excluído com sucesso!");
+        }
     }
 
 }

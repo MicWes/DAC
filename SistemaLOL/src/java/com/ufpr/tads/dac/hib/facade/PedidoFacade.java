@@ -65,13 +65,16 @@ public class PedidoFacade {
             int result = Entregador.solicitarEntrega(pedido);
             if (result == 200) {
                 pedido.setStatus(Status.ENT_SOL.getNum());
-                GenericDao.alterar(pedido);
-                return "Pedido de entrega solicitado";
+                int v = GenericDao.alterar(pedido);
+                if (v == 1) {
+                    return "Pedido de entrega solicitado";
+                }
             } else {
                 return "Falha ao solicitar entrega";
             }
         } else {
             return "Endereço inválido, entre em contato com o cliente";
         }
+        return "Falha ao solicitar entrega";
     }
 }
