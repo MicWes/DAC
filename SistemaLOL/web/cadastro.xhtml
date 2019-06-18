@@ -8,14 +8,17 @@
 
 
     <h:head>
+        <link rel="stylesheet" type="text/css" href="css/cadastro.css" />
         <title>LOL - Cadastro</title>
     </h:head>  
     <h:body>
-        <h1>Cliente novo!</h1>
-        <h2>Informe seus dados</h2>
+        <div align="center" class="register">
+        <div class="form">
+        <h1>Cadastre-se</h1>
+        <h3>Informe seus dados e seja nosso mais novo cliente!</h3>
         <h:form>
             <p:growl id="messages" showDetail="true"/>
-            <h:panelGrid columns="4">
+            <h:panelGrid columns="2">
                 <p:outputLabel value="Nome:" /> 
                 <p:inputText id="nome" value="#{cadCli.cliente.nome}"
                              required="true"
@@ -72,10 +75,12 @@
                     <f:selectItem itemLabel="-- selecione --" itemValue="" noSelectionOption="true" />
                     <f:selectItems value="#{cadCli.cidades}" />
                 </p:selectOneMenu>
-
             </h:panelGrid>
+            <div></div>
             <p:commandButton action="#{cadCli.cadastrar}" value="Cadastrar" update="messages"/>
+            <p:button outcome="index" value="Voltar"></p:button>
         </h:form>
-        <p:link value="Voltar" href="index.xhtml"/>
+        </div>
+        </div>
     </h:body>
 </html>
