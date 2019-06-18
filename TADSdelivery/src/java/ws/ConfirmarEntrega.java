@@ -19,6 +19,8 @@ import org.json.simple.JSONObject;
  *
  * @author Michael
  */
+
+//puxa dados do LOL
 public class ConfirmarEntrega {
     public static int confirmar(T06Delivery pedido){
        Client client = ClientBuilder.newClient();
