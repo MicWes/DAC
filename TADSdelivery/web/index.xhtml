@@ -5,54 +5,63 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-    <h:head>
-        <title>TADS Delivery</title>
-        <h:outputStylesheet name="css/jsfcrud.css"/>
-    </h:head>
-    <h:body>
-         <h:form>
-            <h:panelGrid columns="3">
-                <p:outputLabel value="Login:" />
-                <p:inputText id="usuario"
-                             value="#{login.login}"
-                             required="true"
-                             requiredMessage="Informe o login!"/>
-                <p:message for="usuario" styleClass="red" />
-                
-                <p:outputLabel value="Senha:" />
-                <p:password id="senha"
-                            value="#{login.password}"
-                               required="true"
-                               requiredMessage="Informe a senha!"/>
-                <p:message for="senha" styleClass="red" />
-                
-                <p:commandButton value="Entrar" action="#{login.autenticar()}"  />
-                <p:commandButton id="createButton" icon="ui-icon-plus"   value="Cadastre-se" actionListener="#{t05UserController.prepareCreate}" oncomplete="PF('CadastroDialog').show()"/>
-            </h:panelGrid>
-        </h:form>
-        
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="menu">
+            <h:form id="menuForm">
+                <p:menubar>
+                    <p:menuitem value="Início" icon="ui-icon-home" outcome="/index.xhtml" />
+                </p:menubar>
+            </h:form>
+        </ui:define>
         <hr />
-        <br /><br />
-        <h3>All Tables CRUD:</h3>
-        <h:link outcome="/t01DeliveryStatus/List" value="Show All T01DeliveryStatus Items"/>
-        <br />
-        <h:link outcome="/t02UserType/List" value="Show All T02UserType Items"/>
-        <br />
-        <h:link outcome="/t03State/List" value="Show All T03State Items"/>
-        <br />
-        <h:link outcome="/t04City/List" value="Show All T04City Items"/>
-        <br />
-        <h:link outcome="/t05User/List" value="Show All T05User Items"/>
-        <br />
-        <h:link outcome="/t06Delivery/List" value="Show All T06Delivery Items"/>
-        <br />
-        <h:link outcome="/t07Action/List" value="Show All T07Action Items"/>
-        <br />
-        <h:link outcome="/t08Message/List" value="Show All T08Message Items"/>
-    </h:body>
+        <ui:define name="body">
+            <div align="center">
+            <h:form>
+                <h:panelGrid columns="3" >
+                    <p:outputLabel value="Login:" />
+                    <p:inputText id="usuario"
+                                 value="#{login.login}"
+                                 required="true"
+                                 requiredMessage="Informe o login!"/>
+                    <p:message for="usuario" styleClass="red" />
 
+                    <p:outputLabel value="Senha:" />
+                    <p:password id="senha"
+                                value="#{login.password}"
+                                required="true"
+                                requiredMessage="Informe a senha!"/>
+                    <p:message for="senha" styleClass="red" />
 
-    <ui:include src="/cadastro.xhtml"/>
+                    <p:commandButton value="Entrar" action="#{login.autenticar()}"  />
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Cadastre-se" actionListener="#{t05UserController.prepareCreate}" oncomplete="PF('CadastroDialog').show()"/>
+                </h:panelGrid>
+            </h:form>
+            
+            <hr />
+            <br /><br />
+            <h3>All Tables CRUD:</h3>
+            <h:link outcome="/t01DeliveryStatus/List" value="Show All T01DeliveryStatus Items"/>
+            <br />
+            <h:link outcome="/t02UserType/List" value="Show All T02UserType Items"/>
+            <br />
+            <h:link outcome="/t03State/List" value="Show All T03State Items"/>
+            <br />
+            <h:link outcome="/t04City/List" value="Show All T04City Items"/>
+            <br />
+            <h:link outcome="/t05User/List" value="Show All T05User Items"/>
+            <br />
+            <h:link outcome="/t06Delivery/List" value="Show All T06Delivery Items"/>
+            <br />
+            <h:link outcome="/t07Action/List" value="Show All T07Action Items"/>
+            <br />
+            <h:link outcome="/t08Message/List" value="Show All T08Message Items"/>
+            </div>
+            
+            <p:commandButton value="button"/>
 
+        </ui:define>
+        <ui:include src="/faces/cadastro.xhtml"/>
+    </ui:composition>
 </html>
 

@@ -5,7 +5,6 @@
  */
 package mb;
 
-import controller.T05UserController;
 import facade.AbstractFacade;
 import java.io.Serializable;
 import javax.inject.Named;
@@ -65,13 +64,14 @@ public class LoginMB implements Serializable{
     }
     
     public String autenticar() {
-        Object obj = AbstractFacade.autenticar(login, password);
-        if (obj instanceof T05User) {
+        T05User obj = (T05User)AbstractFacade.autenticar(login, password);
+        
+        if (obj.getUserType().getUsertypeId() == 1) {
             gerente = (T05User)obj;
             return "/t06Delivery/List.xhtml";
-        } else if (obj instanceof T05User) {
+        } else if (obj.getUserType().getUsertypeId() == 2) {
             entregador = (T05User)obj;
-            return "/t07Action/List.xhtml";
+            return "/entregador/List.xhtml";
         }
         return "index";
     }

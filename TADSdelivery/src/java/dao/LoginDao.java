@@ -31,7 +31,7 @@ public class LoginDao {
             Query query = session.createQuery(hql);
             query.setMaxResults(1);
             if (query.uniqueResult() != null) {
-                return (T05User) query.uniqueResult();
+                return (T05User)query.uniqueResult();
             }
         } catch (Exception ex) {
             ex.printStackTrace();

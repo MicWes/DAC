@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+
+        <ui:define name="menu">
+            <h:form id="menuForm">
+                <p:menubar>
+                    <p:menuitem value="Entregas" outcome="/entregador/List.xhtml" />
+                    <p:menuitem value="Sair" onclick="#{login.logout()}" style="position: absolute; right: 6px;"/> 
+                </p:menubar>
+            </h:form>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="EntregadorListForm">
+                <p:panel header="Lista de Entregas">
+                    <p:dataTable id="datalist" value="#{t06DeliveryController.items}" var="item"
+                                 selectionMode="single" selection="#{t06DeliveryController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.deliveryId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="viewButton editButton"/>
+                        <p:ajax event="rowUnselect" update="viewButton editButton"/>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Id"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryId}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descrição"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryDescription}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Origem"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryLocal}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Destino"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryDestiny}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Data da Entrega"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryDtcad}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Status"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryStatus}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Entregador"/>
+                            </f:facet>
+                            <h:outputText value="#{item.deliveryOwner}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Visualizar" update=":EntregadorViewForm" oncomplete="PF('EntregadorViewDialog').show()" disabled="#{empty t06DeliveryController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":EntregadorEditForm" oncomplete="PF('EntregadorEditDialog').show()" disabled="#{empty t06DeliveryController.selected}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+           
+            <ui:include src="/entregador/Edit.xhtml"/>
+            <ui:include src="/entregador/View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>
