@@ -12,7 +12,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.primefaces.context.PrimeFacesContext;
 
 /**
  *

@@ -6,8 +6,6 @@
 package com.ufpr.tads.dac.model;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -76,8 +74,8 @@ public class Funcionario implements Serializable {
         return dataNasc;
     }
 
-    public void setDataNasc(String dataNasc) throws ParseException {
-        this.dataNasc = new SimpleDateFormat("dd/MM/yyyy").parse(dataNasc);
+    public void setDataNasc(Date dataNasc) {
+        this.dataNasc = dataNasc;
     }
 
 }

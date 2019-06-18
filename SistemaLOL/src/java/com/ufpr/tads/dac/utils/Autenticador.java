@@ -50,7 +50,7 @@ public class Autenticador implements PhaseListener {
         if (!lmb.isLogado()) {
             NavigationHandler handler = context.getApplication().
                     getNavigationHandler();
-            handler.handleNavigation(context, null, "login?faces-redirect=true");
+            handler.handleNavigation(context, null, "index?faces-redirect=true");
             context.renderResponse();
         }
     }

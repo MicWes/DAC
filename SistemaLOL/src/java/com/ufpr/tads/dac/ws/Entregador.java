@@ -29,7 +29,7 @@ public class Entregador {
         j.put("endereco", pedido.getEndereco());
         j.put("qtdItens", pedido.getQtdItens());
         WebTarget wt = client.target(
-                "http://localhost:8080/WSTads/webresources/pedidos");
+                "http://192.168.43.31:8080/TADSdelivery/webresources/delivery");
         Invocation.Builder b = wt.request(MediaType.APPLICATION_JSON);
         Response response = b.post(Entity.json(j.toJSONString()));
 

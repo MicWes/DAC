@@ -67,7 +67,7 @@ public class LoginMB implements Serializable {
             Utils.message("Info", "Autenticado com sucesso");
             return "pedidos";
         }
-        return "index?id=1";
+        return "loginErro";
     }
     
     public String logout() {

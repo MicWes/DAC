@@ -10,24 +10,38 @@
     <ui:define name="general_content">
 
         <h:head>
-            <title>Lol - Pedidos</title>
+            <title>LOL - Pedidos</title>
         </h:head>
 
-        <p:growl id="messages" showDetail="true"/>
+        <p:growl id="messages"/>
 
         <h:outputLabel class="title" 
                        rendered="#{login.funcionario ne null}">
-            Olá #{login.funcionario.nome}
+            <h2>Olá #{login.funcionario.nome}</h2>
         </h:outputLabel>  
         <h:outputLabel class="title" 
                        rendered="#{login.cliente ne null}">
-            Olá #{login.cliente.nome}
+            <h2>Olá #{login.cliente.nome}</h2>
         </h:outputLabel>  
-        <h3>Lista de Pedidos</h3>  
 
-        <p:dataTable var="pedido" value="#{pedidoMB.pedidos}" id='dt'>
+        <h:outputLabel rendered="#{pedidoMB.pedidos.size() > 0}">
+            <h3>Lista de Pedidos</h3>  
+        </h:outputLabel>
+
+        <h:outputLabel rendered="#{pedidoMB.pedidos.size() == 0
+                                   and login.cliente ne null}"
+                       style="margin: 0 auto">
+            <p:button value="Faça seu primeiro pedido!" 
+                      outcome="novo_pedido.xhtml" 
+                      icon="pi pi-shopping-cart" 
+                      title="Realizar Novo Pedido"/>
+        </h:outputLabel>
+
+        <p:dataTable var="pedido" value="#{pedidoMB.pedidos}"
+                     rendered="#{pedidoMB.pedidos.size() > 0}"
+                     style="text-align: center;">
             <p:column headerText="Número do Pedido">
-                <h:outputText value="#{pedido.id}" />
+                <h:outputText value="##{pedido.id}" style="align-self: center" />
             </p:column>
 
             <p:column headerText="Id do Cliente"
@@ -45,29 +59,37 @@
 
             <p:column headerText="Ações">
                 <h:form>
-                    <p:menubar style="background-color: transparent">
+                    <p:menubar style="background-color: transparent; width:fit-content">
                         <p:menuitem url="visualizar_pedido.xhtml?id=#{pedido.id}" 
                                     icon="pi pi-eye" 
+                                    style="color: saddlebrown"
                                     title="Visualizar Pedido"/>
                         <p:menuitem icon="pi pi-times red" 
                                     title="Cancelar Pedido"
                                     action="#{pedidoMB.cancelarPedido(pedido)}"
-                                    rendered="#{login.funcionario ne null and 
-                                                pedido.status eq 'Aguardando Lavagem'}"
+                                    rendered="#{pedido.status eq 'Aguardando Lavagem'}"
                                     update="messages"
                                     style="color: red">
                             <p:confirm header="Confirmação" 
                                        message="Excluir o Pedido?" 
                                        icon="pi pi-exclamation-triangle" />
                         </p:menuitem>
-                        <p:menuitem icon="pi pi-cog"
-                                    title="Alterar Status"
-                                    rendered="false">                       
+                        <p:menuitem icon="pi pi-check"
+                                    title="Confirmar Lavagem"
+                                    update="messages"
+                                    action="#{pedidoMB.confirmarLavagem(pedido)}"
+                                    style="color: blue"
+                                    rendered="#{login.funcionario ne null and 
+                                                pedido.status eq 'Aguardando Lavagem'}">
+                            <p:confirm header="Confirmação"
+                                       message="Confirmar Lavagem?"
+                                       icon="pi pi-exclamation-triangle" />
                         </p:menuitem>
                         <p:menuitem action="#{pedidoMB.solicitarEntrega(pedido)}"
                                     icon="pi pi-external-link"
                                     title="Solicitar Entrega"
                                     update="messages"
+                                    style="color: yellow"
                                     rendered="#{login.funcionario ne null and 
                                                 pedido.status eq 'Aguardando Entrega'}">
                             <p:confirm header="Confirmação" 
@@ -75,9 +97,10 @@
                                        icon="pi pi-exclamation-triangle" />
                         </p:menuitem>
                         <p:menuitem action ="#{pedidoMB.realizarPagamento(pedido)}"
-                                    icon="pi pi-money"
+                                    icon="pi pi-money-bill"
                                     title="Confirmar Pagamento"
                                     update="messages"
+                                    style="color: green"
                                     rendered="#{login.funcionario ne null and 
                                                 pedido.status eq 'Aguardando Pagamento'}">
                             <p:confirm header="Confirmação" 

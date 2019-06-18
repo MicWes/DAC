@@ -10,16 +10,13 @@ import com.ufpr.tads.dac.model.Cidade;
 import com.ufpr.tads.dac.model.Cliente;
 import com.ufpr.tads.dac.model.Estado;
 import com.ufpr.tads.dac.utils.Encriptador;
-import com.ufpr.tads.dac.utils.Utils;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 /**
  *

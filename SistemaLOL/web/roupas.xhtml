@@ -7,43 +7,46 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="/templates/base_cliente.xhtml">
 
-    <h:head>
-        <title>Lol - Roupas</title>
-    </h:head>
+
     <ui:define name="general_content">
+        <h:head>
+            <title>LOL - Roupas</title>
+        </h:head>
         <div align="center" class="page">
-        <div class="form-cad">
-        <h2>Nova Roupa</h2>  
-        <h:form>
-            <h:panelGrid columns="3">
-                <p:outputLabel value="Descrição:" /> 
-                <p:inputText id="nome" value="#{roupaMB.roupa.tipo}"
-                             required="true"
-                             requiredMessage="Informe a descrição!"/>
-                <h:message for="nome" styleClass="red"/>
+            <div class="form-cad">
+                <h2>Nova Roupa</h2>  
+                <h:form>
+                    <p:growl id="messages"/>
+                    <h:panelGrid columns="3">
+                        <p:outputLabel value="Descrição:" /> 
+                        <p:inputText id="nome" value="#{roupaMB.roupa.tipo}"
+                                     required="true"
+                                     requiredMessage="Informe a descrição!"/>
+                        <h:message for="nome" styleClass="red"/>
 
-                <p:outputLabel value="Valor" /> 
-                <p:inputMask id="valor" value="#{roupaMB.valor}"
-                             required="true"
-                             requiredMessage="Informe o valor!"
-                             mask="R$ 99.99" 
-                             maxlength="4"/>
-                <h:message for="valor" styleClass="red" />
+                        <p:outputLabel value="Valor" /> 
+                        <p:inputMask id="valor" value="#{roupaMB.valor}"
+                                     required="true"
+                                     requiredMessage="Informe o valor!"
+                                     mask="R$ 99.99" 
+                                     maxlength="4"/>
+                        <h:message for="valor" styleClass="red" />
 
-                <p:outputLabel value="Prazo" /> 
-                <p:inputMask id="prazo" value="#{roupaMB.prazo}"
-                             required="true"
-                             requiredMessage="Informe o prazo de lavagem!"
-                             mask="99:99:99"/>
-                <h:message for="senha" styleClass="red" />
-            </h:panelGrid>
-            <h:commandButton action="#{roupaMB.salvar}" value="Salvar"/>
-        </h:form>
-        </div>
+                        <p:outputLabel value="Prazo" /> 
+                        <p:inputMask id="prazo" value="#{roupaMB.prazo}"
+                                     required="true"
+                                     requiredMessage="Informe o prazo de lavagem!"
+                                     mask="99:99:99"/>
+                        <h:message for="prazo" styleClass="red" />
+                    </h:panelGrid>
+                    <p:commandButton action="#{roupaMB.salvar}" value="Salvar" update="messages"/>
+                </h:form>
+            </div>
         </div>
         <h3>Roupas Disponíves</h3>
-        
-        <p:dataTable var="rpa" value="#{roupaMB.roupas}">
+
+        <p:dataTable var="rpa" value="#{roupaMB.roupas}" 
+                     style="text-align: center;">
             <p:column headerText="Descrição">
                 <h:outputText value="#{rpa.tipo}" />
             </p:column>

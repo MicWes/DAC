@@ -6,6 +6,7 @@
 package com.ufpr.tads.dac.beans;
 
 import com.ufpr.tads.dac.hib.facade.SystemFacade;
+import com.ufpr.tads.dac.utils.Utils;
 import com.ufpr.tads.dac.model.Roupa;
 import java.io.Serializable;
 import java.util.List;
@@ -64,9 +65,15 @@ public class RoupaMB implements Serializable {
         roupa = new Roupa();
     }
 
-    public void salvar() {
+    public String salvar() {
         roupa.setValor(Double.parseDouble(valor.replace("R$ ", "")));
         roupa.setPrazoFromString(prazo);
-        SystemFacade.inserir(roupa);
+        if(SystemFacade.inserir(roupa)) {
+            Utils.message("Info", "Roupa cadastrada com sucesso");
+            return "roupas";
+        } else {
+            Utils.message("Info", "Não foi possível cadastrar a roupa");
+            return "";
+        } 
     }
 }

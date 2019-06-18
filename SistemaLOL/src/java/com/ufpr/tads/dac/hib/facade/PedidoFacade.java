@@ -57,9 +57,19 @@ public class PedidoFacade {
         return false;
     }
 
+    public static void atualizaPedido(int idPedido, boolean entregue) {
+        Pedido p = (Pedido) GenericDao.getByInt(Pedido.class, "id", idPedido);
+        if (entregue) {
+            p.setStatus(Status.CONCLU.getNum());
+            GenericDao.alterar(p);
+        } else {
+            p.setStatus(Status.PROBLE.getNum());
+            GenericDao.alterar(p);
+        }
+    }
+
     public static String solicitarEntrega(Pedido pedido) {
         String endereco = SystemFacade.getEndereco(pedido.getIdCli());
-        String mensagem = "";
         if (!"".equals(endereco)) {
             pedido.setEndereco(endereco);
             int result = Entregador.solicitarEntrega(pedido);

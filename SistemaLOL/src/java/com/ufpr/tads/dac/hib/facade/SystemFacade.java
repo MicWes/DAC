@@ -45,40 +45,40 @@ public class SystemFacade {
 
     public static boolean inserirFuncionario(Funcionario f) {
         if (existeCampo("email", f.getEmail(), 1)) {
-            Utils.message("Info", "Email já em uso!");
+            Utils.message("Email já em uso!");
             return false;
         }
         if (existeCampo("email", f.getEmail(), 0)) {
-            Utils.message("Info", "Email já em uso!");
+            Utils.message("Email já em uso!");
             return false;
         }
         if (inserir(f)) {
-            Utils.message("Info", "Cadastro realizado com sucesso!");
+            Utils.message("Cadastro realizado com sucesso!");
             return true;
         } else {
-            Utils.message("Info", "Falha ao realizar cadastro");
+            Utils.message("Falha ao realizar cadastro");
             return false;
         }
     }
 
     public static boolean inserirCliente(Cliente c) {
         if (existeCampo("cpf", c.getCpf(), 0)) {
-            Utils.message("Info", "CPF já cadastrado!");
+            Utils.message("CPF já cadastrado!");
             return false;
         }
         if (existeCampo("email", c.getEmail(), 1)) {
-            Utils.message("Info", "Email já em uso!");
+            Utils.message("Email já em uso!");
             return false;
         }
         if (existeCampo("email", c.getEmail(), 0)) {
-            Utils.message("Info", "Email já em uso!");
+            Utils.message("Email já em uso!");
             return false;
         }
         if (inserir(c)) {
-            Utils.message("Info", "Cadastro realizado com sucesso!");
+            Utils.message("Cadastro realizado com sucesso!");
             return true;
         } else {
-            Utils.message("Info", "Falha ao realizar cadastro");
+            Utils.message("Falha ao realizar cadastro");
             return false;
         }
     }

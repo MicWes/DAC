@@ -86,9 +86,16 @@ public class VerPedidoMB {
     }
 
     public void alterarStatus() {
-        pedido.setStatus(newStatus.getNum());
-        SystemFacade.alterar(pedido);
-        Utils.message("Info:", "Status Alterado");
+        if (!"Aguardando Lavagem".equals(pedido.getStatus())
+                && newStatus.getNum() == Status.CANCEL.getNum()) {
+            Utils.message("Info:", "Não é possível cancelar um pedido já lavado!");
+        } else if ("Concluído".equals(pedido.getStatus())) {
+            Utils.message("Info:", "Esse pedido já foi finalizado");
+        } else {
+            pedido.setStatus(newStatus.getNum());
+            SystemFacade.alterar(pedido);
+            Utils.message("Info:", "Status Alterado para: " + newStatus.name());
+        }
     }
 
 }

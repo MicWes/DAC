@@ -69,28 +69,38 @@ public class PedidosMB implements Serializable {
     public void alterarStatus(Pedido pedido) {
         pedido.setStatus(newStatus.getNum());
         SystemFacade.alterar(pedido);
-        Utils.message("Info:", "Status Alterado");
+        Utils.message("Status Alterado");
     }
 
-    public void solicitarEntrega(Pedido pedido) {
-        PedidoFacade.solicitarEntrega(pedido);
-        Utils.message("Info:", "Entrega solicitada");
+    public String confirmarLavagem(Pedido pedido) {
+        pedido.setStatus(Status.AGD_PAG.getNum());
+        SystemFacade.alterar(pedido);
+        Utils.message("Lavagem confirmada!");
+        return "pedidos";
     }
 
-    public void realizarPagamento(Pedido pedido) {
+    public String solicitarEntrega(Pedido pedido) {
+        String result = PedidoFacade.solicitarEntrega(pedido);
+        Utils.message("Info:", result);
+        return "pedidos";
+    }
+
+    public String realizarPagamento(Pedido pedido) {
         pedido.setStatus(Status.AGD_ENT.getNum());
         SystemFacade.alterar(pedido);
-        Utils.message("Info:", "Pagamento confirmado!");
+        Utils.message("Pagamento confirmado!");
+        return "pedidos";
     }
 
-    public void cancelarPedido(Pedido pedido) {
+    public String cancelarPedido(Pedido pedido) {
         if (!"Aguardando Lavagem".equals(pedido.getStatus())) {
-            Utils.message("Info", "Esse pedido não pode mais ser cancelado");
+            Utils.message("Esse pedido não pode mais ser cancelado");
         } else {
             pedido.setStatus(Status.CANCEL.getNum());
             SystemFacade.alterar(pedido);
-            Utils.message("Info:", "Pedido excluído com sucesso!");
+            Utils.message("Pedido cancelado com sucesso!");
         }
+        return "pedidos";
     }
 
 }

@@ -5,6 +5,8 @@
  */
 package com.ufpr.tads.dac.ws;
 
+import com.ufpr.tads.dac.hib.facade.PedidoFacade;
+import com.ufpr.tads.dac.utils.Utils;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -38,7 +40,12 @@ public class StatusResource {
                 j = (JSONObject) parser.parse(mensagem);
                 int idPedido = ((Long) j.get("idPedido")).intValue();
                 String info = (String) j.get("info");
-                //TODO
+                Utils.message("Info", "TADS Delivery diz: Pedido Nº" + idPedido + " " + info);
+                if ("Entregue".equals(info)) {
+                    PedidoFacade.atualizaPedido(idPedido, true);
+                } else {
+                    PedidoFacade.atualizaPedido(idPedido, false);
+                }
                 return "Pedido recebido!";
             } catch (ParseException ex) {
                 return "Não conseguimos interpretar seu request";

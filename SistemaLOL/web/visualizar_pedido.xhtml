@@ -5,7 +5,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="/templates/base_cliente.xhtml">
+                template="/templates/base_cliente.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="general_content">
 
@@ -15,42 +16,53 @@
 
         <p:growl id="messages" showDetail="true"/>
 
-        <h:outputLabel class="title"> Dados do Pedido nº #{verPedido.idPedido}</h:outputLabel>  
+        <h:outputLabel> <h2>Dados do Pedido nº #{verPedido.idPedido}</h2></h:outputLabel>  
 
-        <p:panelGrid columns="4">
-            <p:outputLabel value="Hora de realização do pedido:"/>
-            <h:outputText value="#{verPedido.pedido.horaPedido}">
-                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-            </h:outputText>
-            <p:outputLabel value="Prazo para a lavagem dos itens:"/>
-            <h:outputText value="#{verPedido.pedido.prazo}">
-                <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-            </h:outputText>
-            <p:outputLabel value="Quantidade total de itens:"/>
-            <p:outputLabel value="#{verPedido.pedido.qtdItens}"/>
-            <p:outputLabel value="Status atual do pedido:"/>
-            <p:outputLabel value="#{verPedido.pedido.status}"/>
+        <p:panelGrid columns="3" style="margin: 0 auto">
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Hora de realização do pedido:" 
+                               style="font-weight: bold"/>
+                <h:outputText value="#{verPedido.pedido.horaPedido}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                </h:outputText>
+                <p:outputLabel value="Prazo para a lavagem dos itens:"
+                               style="font-weight: bold"/>
+                <h:outputText value="#{verPedido.pedido.prazo}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                </h:outputText>
+            </p:panelGrid>
+            <p:spacer width="40px"/>
+            <p:panelGrid columns="2">
+                <p:outputLabel value="Quantidade total de itens:"
+                               style="font-weight: bold"/>
+                <p:outputLabel value="#{verPedido.pedido.qtdItens}"/>
+                <p:outputLabel value="Status atual do pedido:"
+                               style="font-weight: bold"/>
+                <p:outputLabel value="#{verPedido.pedido.status}"/>
+            </p:panelGrid>
         </p:panelGrid>
-        <h:form id="form1" rendered="#{login.funcionario ne null}">
-            <p:outputLabel value="Novo Status: "/>
+        <p:spacer height="30px"/>;
+        <p:panelGrid columns="3" style="margin: 0 auto;">
+            <h:form id="form1" rendered="#{login.funcionario ne null}"
+                    style="margin: 0 auto;">
+                <p:outputLabel value="Novo Status: "
+                               style="font-weight: bold;"/>
+                <p:selectOneMenu value="#{verPedido.newStatus}">
+                    <f:selectItem itemLabel="-- selecione --" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{verPedido.status}"/>
+                </p:selectOneMenu>
+                <p:commandButton value="Alterar"
+                                 title="Alterar Status"
+                                 action="#{verPedido.alterarStatus()}"
+                                 update=":form1">
+                    <p:confirm header="Novo Status" 
+                               message="Novo Status: #{verPedido.newStatus} está correto?" 
+                               icon="pi pi-exclamation-triangle" />
+                </p:commandButton>
+            </h:form>
+        </p:panelGrid>
 
-            <p:selectOneMenu value="#{verPedido.newStatus}">
-                <f:selectItem itemLabel="-- selecione --" itemValue="" noSelectionOption="true"/>
-                <f:selectItems value="#{verPedido.status}"/>
-            </p:selectOneMenu>
-
-            <p:commandButton value="Alterar"
-                             title="Alterar Status"
-                             action="#{verPedido.alterarStatus()}"
-                             update=":form1">
-                <p:confirm header="Novo Status" 
-                           message="Novo Status: #{verPedido.newStatus} está correto?" 
-                           icon="pi pi-exclamation-triangle" />
-            </p:commandButton>
-        </h:form>
-
-        <h:outputLabel class="subtitle">Itens do Pedido</h:outputLabel>
-
+        <h:outputLabel><h3>Itens do Pedido</h3></h:outputLabel>
         <p:dataTable var="roupa" value="#{verPedido.keys}">
             <p:column headerText="Roupa">
                 <h:outputText value="#{roupa.tipo}" />
@@ -63,13 +75,14 @@
             <p:column headerText="Preço">
                 <h:outputText value="#{roupa.valor}" />
             </p:column>
+            <f:facet name="footer">
+                <h:outputText value="Total: "/>
+                <h:outputText value="#{verPedido.pedido.total}" >
+                    <f:convertNumber currencyCode="BRL" type="currency" />
+                </h:outputText>
+            </f:facet>
 
         </p:dataTable>
-        <h:outputText value="Total: "/>
-        <h:outputText value="#{novoPedido.total}" >
-            <f:convertNumber currencyCode="BRL" type="currency" />
-        </h:outputText>
-
         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
             <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />

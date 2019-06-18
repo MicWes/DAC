@@ -9,6 +9,11 @@ import com.ufpr.tads.dac.hib.facade.SystemFacade;
 import com.ufpr.tads.dac.model.Funcionario;
 import com.ufpr.tads.dac.utils.Encriptador;
 import com.ufpr.tads.dac.utils.Utils;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -22,6 +27,7 @@ import javax.faces.bean.ViewScoped;
 public class CadastroFunMB {
 
     private Funcionario funcionario;
+    private String datanasc;
 
     @PostConstruct
     public void init() {
@@ -36,11 +42,27 @@ public class CadastroFunMB {
         this.funcionario = funcionario;
     }
 
+    public String getDatanasc() {
+        return datanasc;
+    }
+
+    public void setDatanasc(String datanasc) {
+        this.datanasc = datanasc;
+    }
+
     public String cadastrar() {
         funcionario.setSenha(Encriptador.toMD5(funcionario.getSenha()));
-        if (SystemFacade.inserir(funcionario)) {
-            Utils.message("Info", "Cadastrado com sucesso");
-            return "pedidos";
+        Date data = null;
+        try {
+            data = new SimpleDateFormat("dd/MM/yyyy").parse(datanasc);
+        } catch (ParseException ex) {
+            Utils.message("Informe uma data válida!");
+        }
+        if (data != null) {
+            funcionario.setDataNasc(data);
+            if (SystemFacade.inserirFuncionario(funcionario)) {
+                return "pedidos";
+            }
         }
         return "";
     }
