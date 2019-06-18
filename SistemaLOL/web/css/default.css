@@ -7,7 +7,96 @@ and open the template in the editor.
     Created on : 17/06/2019, 22:00:31
     Author     : michellynk
 */
+.ui-menubar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
-.login-page {
-  background-image: linear-gradient(-90deg, blue, lightblue);
+.ui-menuitem  {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.ui-menuitem :hover {
+  background: #ddd;
+  color: black;
+}
+
+.main {
+  padding: 16px;
+  margin-top: 30px;
+  height: 1500px; /* Used in this example to enable scrolling */
+}
+
+body {
+  background-image: linear-gradient(-90deg, #e6f2ff,  #0056b3);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;   
+}
+
+.page {
+  width:450px;
+  padding: 8% 0 0;
+  margin: auto;
+}
+.form-cad {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 450px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 25px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #66b3ff;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  color: #FFFFFF;
+  font-size: 14px;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+.form button:hover,.form button:active,.form button:focus {
+  background: #0080ff;
+}
+
+h2 {
+    text-align: center;
+    color : #0056b3;
+}
+
+h3 {
+    text-align: center;
+    color : white;
+    font-size: big;
+    font-family: "Roboto", sans-serif;
 }

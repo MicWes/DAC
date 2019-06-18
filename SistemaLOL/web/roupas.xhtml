@@ -11,8 +11,9 @@
         <title>Lol - Roupas</title>
     </h:head>
     <ui:define name="general_content">
-
-        <h:outputLabel class="title">Nova Roupa</h:outputLabel>  
+        <div align="center" class="page">
+        <div class="form-cad">
+        <h2>Nova Roupa</h2>  
         <h:form>
             <h:panelGrid columns="3">
                 <p:outputLabel value="Descrição:" /> 
@@ -38,8 +39,9 @@
             </h:panelGrid>
             <h:commandButton action="#{roupaMB.salvar}" value="Salvar"/>
         </h:form>
-
-        <h:outputLabel class="subtitle">Roupas Disponíves</h:outputLabel>
+        </div>
+        </div>
+        <h3>Roupas Disponíves</h3>
         
         <p:dataTable var="rpa" value="#{roupaMB.roupas}">
             <p:column headerText="Descrição">

@@ -10,11 +10,14 @@
     <h:head>
         <title>Lol - Cadastro de Funcionário</title>
     </h:head>
+    <body>
     <ui:define name="general_content">
-
+        <div align="center" class="page">
+        <div class="form-cad">
+            <h2>Cadastrar Funcionário</h2>
         <h:form>
             <p:growl id="messages" showDetail="true"/>
-            <h:panelGrid columns="4">
+            <h:panelGrid columns="2">
                 <p:outputLabel value="Nome:" /> 
                 <p:inputText id="nome" value="#{cadFun.funcionario.nome}"
                              required="true"
@@ -39,6 +42,8 @@
             </h:panelGrid>
             <p:commandButton action="#{cadFun.cadastrar}" value="Cadastrar" update="messages"/>
         </h:form>
-
+        </div>
+        </div>
     </ui:define>
+    </body>
 </ui:composition>

@@ -23,7 +23,7 @@
                        rendered="#{login.cliente ne null}">
             Olá #{login.cliente.nome}
         </h:outputLabel>  
-        <h:outputLabel class="subtitle">Lista de Pedidos</h:outputLabel>  
+        <h3>Lista de Pedidos</h3>  
 
         <p:dataTable var="pedido" value="#{pedidoMB.pedidos}" id='dt'>
             <p:column headerText="Número do Pedido">
